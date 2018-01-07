@@ -454,11 +454,11 @@ gulp.task('test:client', done => {
 
 
 gulp.task('build-image', function(imageId) {
-  return gutil.log('Gulp is running!')
+  console.log('imageId: ' + imageId)
 });
 
 gulp.task('deploy-image', function(targetEnv, imageId) {
-  return gutil.log('Gulp is running!')
+  console.log('imageId: ' + imageId)
 });
 
 
