@@ -530,11 +530,13 @@ function flatten() {
         next();
     });
 }
+
 gulp.task('copy:fonts:dev', () => {
     return gulp.src('node_modules/{bootstrap,font-awesome}/fonts/*')
         .pipe(flatten())
         .pipe(gulp.dest(`${clientPath}/assets/fonts`));
 });
+
 gulp.task('copy:fonts:dist', () => {
     return gulp.src('node_modules/{bootstrap,font-awesome}/fonts/*')
         .pipe(flatten())
@@ -590,10 +592,19 @@ gulp.task('buildcontrol:heroku', function(done) {
         function() {done();}
     );
 });
+
 gulp.task('buildcontrol:openshift', function(done) {
     grunt.tasks(
-        ['buildcontrol:openshift'],    //you can add more grunt tasks in this array
+        ['buildcontrol:openshift'], l   //you can add more grunt tasks in this array
         {gruntfile: false}, //don't look for a Gruntfile - there is none. :-)
         function() {done();}
     );
+});
+
+gulp.task('docker:build-image', function() {
+
+});
+
+gulp.task('docker:deploy-image', function() {
+
 });
