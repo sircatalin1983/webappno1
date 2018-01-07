@@ -451,6 +451,17 @@ gulp.task('test:client', done => {
     }).start();
 });
 
+
+
+gulp.task('build-image', function(imageId) {
+  return gutil.log('Gulp is running!')
+});
+
+gulp.task('deploy-image', function(targetEnv, imageId) {
+  return gutil.log('Gulp is running!')
+});
+
+
 /********************
  * Build
  ********************/
@@ -599,12 +610,4 @@ gulp.task('buildcontrol:openshift', function(done) {
         {gruntfile: false}, //don't look for a Gruntfile - there is none. :-)
         function() {done();}
     );
-});
-
-gulp.task('build-image', function(imageId) {
-
-});
-
-gulp.task('deploy-image', function(targetEnv, imageId) {
-
 });
