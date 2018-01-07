@@ -477,7 +477,7 @@ gulp.task('build-image', function(imageId) {
   console.log('imageId: ' + imageId)
 
   console.log('lista parametrii: ' + process.argv)
-  console.log('lista modificata: '+ arg )
+  console.log('imageId: '+ arg['imageId'])
 });
 
 gulp.task('deploy-image', function(targetEnv, imageId) {
