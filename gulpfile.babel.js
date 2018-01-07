@@ -601,10 +601,10 @@ gulp.task('buildcontrol:openshift', function(done) {
     );
 });
 
-gulp.task('docker:build-image', function(imageId) {
+gulp.task('build-image', function(imageId) {
 
 });
 
-gulp.task('docker:deploy-image', function(targetEnv, imageId) {
+gulp.task('deploy-image', function(targetEnv, imageId) {
 
 });
