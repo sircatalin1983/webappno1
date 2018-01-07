@@ -455,6 +455,7 @@ gulp.task('test:client', done => {
 
 gulp.task('build-image', function(imageId) {
   console.log('imageId: ' + imageId)
+  console.log('lista parametrii: ' + process.argv)
 });
 
 gulp.task('deploy-image', function(targetEnv, imageId) {
