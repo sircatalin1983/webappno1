@@ -595,16 +595,16 @@ gulp.task('buildcontrol:heroku', function(done) {
 
 gulp.task('buildcontrol:openshift', function(done) {
     grunt.tasks(
-        ['buildcontrol:openshift'], l   //you can add more grunt tasks in this array
+        ['buildcontrol:openshift'],  //you can add more grunt tasks in this array
         {gruntfile: false}, //don't look for a Gruntfile - there is none. :-)
         function() {done();}
     );
 });
 
-gulp.task('docker:build-image', function() {
+gulp.task('docker:build-image', function(imageId) {
 
 });
 
-gulp.task('docker:deploy-image', function() {
+gulp.task('docker:deploy-image', function(targetEnv, imageId) {
 
 });
