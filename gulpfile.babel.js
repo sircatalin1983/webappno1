@@ -480,7 +480,7 @@ gulp.task('build-image', function() {
   if (!arg['imageId']) {
     console.log('must supply an imageId to build');
   }
-  var rc = shell.exec('sudo docker build -t webappno1:' + arg['imageId'] + ' ./dist').code;
+  var rc = shell.exec('docker build -t webappno1:' + arg['imageId'] + ' ./dist').code;
 
   console.log('rc:' + rc)
 
