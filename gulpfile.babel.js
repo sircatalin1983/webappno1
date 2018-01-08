@@ -470,7 +470,7 @@ gulp.task('test:client', done => {
     }).start();
 });
 
-gulp.task('build-image', function(imageId) {
+gulp.task('build-image', function() {
   // fetch command line arguments
   console.log('imageId: '+ arg['imageId'])
 
@@ -480,7 +480,7 @@ gulp.task('build-image', function(imageId) {
   if (!arg['imageId']) {
     console.log('must supply an imageId to build');
   }
-  var rc = shell.exec('docker build -t webappno1:' + arg['imageId'] + ' -f Dockerfile ./dist').code;
+  var rc = shell.exec('docker build -t webappno1:' + arg['imageId'] + ' ./dist').code;
 
   console.log('rc:' + rc)
 
@@ -491,7 +491,7 @@ gulp.task('build-image', function(imageId) {
   console.log('STOP')
 });
 
-gulp.task('deploy-image', function(targetEnv, imageId) {
+gulp.task('deploy-image', function() {
   console.log('targetEnv: '+ arg['targetEnv'])
   console.log('imageId: '+ arg['imageId'])
 });
