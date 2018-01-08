@@ -476,10 +476,10 @@ gulp.task('build-image', function(imageId) {
   console.log('START')
   var shell = require("shelljs");
   console.log('BUILDING IMAGE');
-  if (!imageId) {
+  if (!arg['imageId']) {
     console.log('must supply an imageId to build');
   }
-  var rc = shell.exec('docker build -t webappno1:' + imageId + ' -f ./dist/Dockerfile ./dist').code;
+  var rc = shell.exec('docker build -t webappno1:' + arg['imageId'] + ' -f ./dist/Dockerfile ./dist').code;
 
   console.log('rc:' + rc)
 
