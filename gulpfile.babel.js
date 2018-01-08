@@ -470,19 +470,31 @@ gulp.task('test:client', done => {
     }).start();
 });
 
-
-
 gulp.task('build-image', function(imageId) {
   // fetch command line arguments
   console.log('imageId: '+ arg['imageId'])
-  
+
+  console.log('START')
+  var shell = require("shelljs");
+  console.log('BUILDING IMAGE');
+  if (!arg['imageId']) {
+    console.log('must supply an imageId to build');
+  }
+  var rc = shell.exec('docker build -t webappno1:' + arg['imageId'] + ' -f ./dist/Dockerfile ./dist').code;
+
+  console.log('rc:' + rc)
+
+  if (rc > 0){
+     console.log('DOCKER FAILURE')
+  }
+
+  console.log('START')
 });
 
 gulp.task('deploy-image', function(targetEnv, imageId) {
   console.log('targetEnv: '+ arg['targetEnv'])
   console.log('imageId: '+ arg['imageId'])
 });
-
 
 /********************
  * Build
