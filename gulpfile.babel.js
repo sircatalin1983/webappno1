@@ -480,7 +480,7 @@ gulp.task('build-image', function(imageId) {
   if (!arg['imageId']) {
     console.log('must supply an imageId to build');
   }
-  var rc = shell.exec('docker build -t webappno1:' + arg['imageId'] + ' -f ./dist/Dockerfile ./dist').code;
+  var rc = shell.exec('docker build -t webappno1:' + arg['imageId'] + ' -f Dockerfile ./dist').code;
 
   console.log('rc:' + rc)
 
@@ -488,7 +488,7 @@ gulp.task('build-image', function(imageId) {
      console.log('DOCKER FAILURE')
   }
 
-  console.log('START')
+  console.log('STOP')
 });
 
 gulp.task('deploy-image', function(targetEnv, imageId) {
