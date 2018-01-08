@@ -475,6 +475,7 @@ gulp.task('test:client', done => {
 gulp.task('build-image', function(imageId) {
   // fetch command line arguments
   console.log('imageId: '+ arg['imageId'])
+  
 });
 
 gulp.task('deploy-image', function(targetEnv, imageId) {
