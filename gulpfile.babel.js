@@ -473,13 +473,14 @@ gulp.task('test:client', done => {
 gulp.task('build-image', function() {
   // fetch command line arguments
   console.log('imageId: '+ arg['imageId'])
+
   console.log('START')
   var shell = require("shelljs");
   console.log('BUILDING IMAGE');
   if (!arg['imageId']) {
     console.log('must supply an imageId to build');
   }
-  var rc = shell.exec('docker build -t webappno1:' + arg['imageId'] + ' -f ./dist/Dockerfile ./dist').code;
+  var rc = shell.exec('docker build -t webappno1:' + arg['imageId'] + ' ./dist').code;
 
   console.log('rc:' + rc)
 
@@ -487,7 +488,7 @@ gulp.task('build-image', function() {
      console.log('DOCKER FAILURE')
   }
 
-  console.log('START')
+  console.log('STOP')
 });
 
 gulp.task('deploy-image', function() {
