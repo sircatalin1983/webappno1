@@ -470,7 +470,7 @@ gulp.task('test:client', done => {
     }).start();
 });
 
-gulp.task('build-image', function(imageId) {
+gulp.task('build-image', function() {
   // fetch command line arguments
   console.log('imageId: '+ arg['imageId'])
   console.log('START')
@@ -490,7 +490,7 @@ gulp.task('build-image', function(imageId) {
   console.log('START')
 });
 
-gulp.task('deploy-image', function(targetEnv, imageId) {
+gulp.task('deploy-image', function() {
   console.log('targetEnv: '+ arg['targetEnv'])
   console.log('imageId: '+ arg['imageId'])
 });
