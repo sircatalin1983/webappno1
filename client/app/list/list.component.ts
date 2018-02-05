@@ -36,8 +36,15 @@ export class ListComponent {
     }
   }
 
+  editItem() {
+  }
+
   deleteItem(list) {
     this.$http.delete('/api/items/' + list._id);
+  }
+
+  toogleCompleted() {
+
   }
 }
 

@@ -4,9 +4,8 @@ import mongoose from 'mongoose';
 import {registerEvents} from './item.events';
 
 var ItemSchema = new mongoose.Schema({
-  name: String,
-  info: String,
-  active: Boolean
+  title: String,
+  completed: Boolean
 });
 
 registerEvents(ItemSchema);

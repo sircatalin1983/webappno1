@@ -30,7 +30,7 @@
 <section id="todoapp" class="todoapp" style="min-height: 300px">
 
     <header id="header" class="header">
-        <h1>todos</h1>
+        <h1>My List</h1>
     </header>
     <form id="todo-form" class="todo-form" ng-submit="$ctrl.addItem()">
         <input id="new-todo" class="new-todo" placeholder="What needs to be done?" ng-model="$ctrl.newItem" ng-disabled="saving"
@@ -39,6 +39,20 @@
 
     <section id="main" class="main" ng-cloak>
         <div id="todo-list" class="todo-list">
+            <ul>
+                <li ng-repeat="item in $ctrl.myItems">
+                    <div class="view" class="todo">
+                        <button ng-class="{'checked': item.completed}" class="toggle" ng-click="$ctrl.toggleCompleted(item)"></button>
+                        <label ng-dblclick="$ctrl.editItem(item)">{{item.title}}</label>
+                        <button class="destroy icon" ng-click="$ctrl.deleteItem(item)"></button>
+                    </div>
+                    <form ng-submit="saveEdits(todo, 'submit')">
+                        <input class="edit" ng-trim="false" ng-model="todo.title" todo-escape="revertEdits(todo)" ng-blur="saveEdits(todo, 'blur')"
+                            todo-focus="todo == editedTodo">
+                    </form>
+                </li>
+            </ul>
+            <!--
             <ul ng-if="!loadingTodos">
                 <li ng-repeat="todo in filterByStatus(todos) track by $index" ng-class="{completed: todo.completed, editing: todo == editedTodo}">
                     <div class="view" class="todo">
@@ -53,6 +67,7 @@
                 </li>
             </ul>
             <i ng-if="loadingTodos" class="fa fa-spinner fa-pulse fa-3x fa-fw loader"></i>
+        -->
         </div>
 
         <footer id="footer" class="footer" ng-show="todos.length" ng-cloak>
