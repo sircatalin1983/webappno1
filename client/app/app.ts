@@ -24,7 +24,9 @@ import main from './main/main.component';
 import constants from './app.constants';
 import util from '../components/util/util.module';
 import socket from '../components/socket/socket.service';
-
+import abc from './abc/abc.component';
+import lists from './lists/lists.component';
+import list from './list/list.component';
 
 import './app.css';
 
@@ -42,12 +44,15 @@ angular.module('myappApp', [
   account,
   admin,
   'validation.match',
-    navbar,
+  navbar,
   footer,
   main,
   constants,
   socket,
-  util
+  util,
+  abc,
+  lists,
+  list
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

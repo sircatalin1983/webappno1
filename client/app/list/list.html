@@ -1,0 +1,77 @@
+<header class="hero-unit" id="banner">
+
+</header>
+
+<div class="container">
+    <form class="list-form">
+        <label>Create new item</label>
+        <p class="input-group">
+            <input type="text" class="form-control" placeholder="Add a new list name here." ng-model="$ctrl.newItem">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary" ng-click="$ctrl.addItem()">Add New</button>
+            </span>
+        </p>
+    </form>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">List: NAME</h1>
+            <div class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="item in $ctrl.myItems">
+                <a href="#" uib-tooltip="{{item.info}}">
+                    <input type="checkbox" ng-click="transferTo($index, completed, tasks)" checked />
+                    <label ng-dblclick="editTodo(id)">{{item.name}}</label>
+                    <button type=l "button" class="close" ng-click="$ctrl.deleteItem(item)">&times;</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section id="todoapp" class="todoapp" style="min-height: 300px">
+
+    <header id="header" class="header">
+        <h1>todos</h1>
+    </header>
+    <form id="todo-form" class="todo-form" ng-submit="$ctrl.addItem()">
+        <input id="new-todo" class="new-todo" placeholder="What needs to be done?" ng-model="$ctrl.newItem" ng-disabled="saving"
+            autofocus>
+    </form>
+
+    <section id="main" class="main" ng-cloak>
+        <div id="todo-list" class="todo-list">
+            <ul ng-if="!loadingTodos">
+                <li ng-repeat="todo in filterByStatus(todos) track by $index" ng-class="{completed: todo.completed, editing: todo == editedTodo}">
+                    <div class="view" class="todo">
+                        <button ng-class="{'checked': todo.completed}" class="toggle" ng-click="toggleCompleted(todo)"></button>
+                        <label ng-dblclick="editTodo(todo)">{{todo.title}}</label>
+                        <button class="destroy icon" ng-click="removeTodo(todo)"></button>
+                    </div>
+                    <form ng-submit="saveEdits(todo, 'submit')">
+                        <input class="edit" ng-trim="false" ng-model="todo.title" todo-escape="revertEdits(todo)" ng-blur="saveEdits(todo, 'blur')"
+                            todo-focus="todo == editedTodo">
+                    </form>
+                </li>
+            </ul>
+            <i ng-if="loadingTodos" class="fa fa-spinner fa-pulse fa-3x fa-fw loader"></i>
+        </div>
+
+        <footer id="footer" class="footer" ng-show="todos.length" ng-cloak>
+            <span id="todo-count" class="todo-count">
+                <strong>{{remainingCount}}</strong>
+                <ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
+            </span>
+            <ul id="filters" class="filters">
+                <li>
+                    <a class="do-all" ng-class="{selected: status == ''} " ng-click="setStatusFilter('all')">All</a>
+                </li>
+                <li>
+                    <a class="do-active" ng-class="{selected: status == 'active'}" ng-click="setStatusFilter('active')">Active</a>
+                </li>
+                <li>
+                    <a class="do-completed" ng-class="{selected: status == 'completed'}" ng-click="setStatusFilter('completed')">Completed</a>
+                </li>
+            </ul>
+            <button id="clear-completed" ng-click="clearCompletedTodos()" ng-show="completedCount">Clear completed</button>
+        </footer>
+    </section>
+</section>

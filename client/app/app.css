@@ -44,7 +44,10 @@
 
 /* Component styles are injected through gulp */
 /* inject:css */
+@import 'abc/abc.css';
 @import 'admin/admin.css';
+@import 'list/list.css';
+@import 'lists/lists.css';
 @import 'main/main.css';
 @import '../components/footer/footer.css';
 @import '../components/modal/modal.css';
