@@ -9,10 +9,12 @@ export class ListComponent {
   
   myItems = [];
   newItem = '';
-  editedItem;
-  itemUnderEdit; 
+
   loadingItems = true;
 
+  editedItem = null;
+  itemUnderEdit = null;
+  
   /*@ngInject*/
   constructor($http, $scope, socket) {
     this.$http = $http;
@@ -36,7 +38,7 @@ export class ListComponent {
 
   addItem() {
     if (this.newItem) {
-      this.$http.post('/api/items', { title: this.newItem, info: "fff"});
+      this.$http.post('/api/items', { title: this.newItem, info: "" });
       this.newItem = '';
     }
   }

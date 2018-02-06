@@ -16,14 +16,14 @@
         <div id="todo-list" class="todo-list">
             <ul>
                 <li ng-repeat="item in $ctrl.myItems">
-                    <div class="view" class="todo" ng-class="{completed: item.completed, editing: item == editedItem}">
+                    <div class="view" class="todo" ng-class="{completed: item.completed, editing: true}">
                         <button ng-class="{'checked': item.completed}" class="toggle" ng-click="$ctrl.toggleCompleted(item)"></button>
                         <label ng-dblclick="$ctrl.editItem(item)">{{item.title}}</label>
                         <button class="destroy icon" ng-click="$ctrl.deleteItem(item)"></button>
                     </div>
                     <form ng-submit="$ctrl.saveItem(item, 'submit')">
                         <input class="edit" ng-trim="false" ng-model="item.title" todo-escape="$ctrl.undoItem(item)" ng-blur="$ctrl.saveItem(item, 'blur')"
-                            todo-focus="item == editedItem">
+                            todo-focus="true">
                     </form>
                 </li>
             </ul>
@@ -46,7 +46,7 @@
         -->
         </div>
 
-        <footer id="footer" class="footer" ng-show="myItems.length" ng-cloak>lll
+        <footer id="footer" class="footer" ng-show="$ctrl.myItems.length" ng-cloak>
             <span id="todo-count" class="todo-count">
                 <strong>{{remainingCount}}</strong>
                 <ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
