@@ -9,6 +9,9 @@ export class ListComponent {
   
   myItems = [];
   newItem = '';
+  editedItem;
+  itemUnderEdit; 
+  loadingItems = true;
 
   /*@ngInject*/
   constructor($http, $scope, socket) {
@@ -27,24 +30,38 @@ export class ListComponent {
       this.myItems = response.data;
       this.socket.syncUpdates('item', this.myItems);
     });
+
+    this.loadingItems = false;
   }
 
   addItem() {
     if (this.newItem) {
-      this.$http.post('/api/items', { name: this.newItem, info: "fff"});
+      this.$http.post('/api/items', { title: this.newItem, info: "fff"});
       this.newItem = '';
     }
   }
 
-  editItem() {
+  editItem(item) {
+    this.editedItem = item;
+    this.itemUnderEdit = angular.extend({}, item);
   }
 
-  deleteItem(list) {
-    this.$http.delete('/api/items/' + list._id);
+  undoItem(item) {
+    alert(item);
+  }
+  
+  saveItem(item, event) {
+   
   }
 
-  toogleCompleted() {
+  deleteItem(item) {
+    this.$http.delete('/api/items/' + item._id);
+  }
 
+  toggleCompleted(item) {
+    var newVal = !item.completed;
+    this.$http.put('/api/items/'+ item._id, { completed: newVal} );
+    item.completed = newVal;
   }
 }
 
