@@ -12,9 +12,10 @@ export class ListComponent {
 
   loadingItems = true;
 
-  editedItem = null;
-  itemUnderEdit = null;
+  originalItem = null;
   
+  statusFilter = false;
+
   /*@ngInject*/
   constructor($http, $scope, socket) {
     this.$http = $http;
@@ -28,12 +29,15 @@ export class ListComponent {
   $onInit() {
     var vm = this;
 
+    this.loadingItems = true;
+    this.setStatusFilter('all');
+
     this.$http.get('/api/items').then(response => {
       this.myItems = response.data;
       this.socket.syncUpdates('item', this.myItems);
     });
 
-    this.loadingItems = false;
+    this.loadingItems = false;    
   }
 
   addItem() {
@@ -44,20 +48,20 @@ export class ListComponent {
   }
 
   editItem(item) {
-    this.editedItem = item;
-    this.itemUnderEdit = angular.extend({}, item);
+    this.originalItem = item;
   }
 
-  undoItem(item) {
-    alert(item);
-  }
-  
-  saveItem(item, event) {
-   
+  saveItem(item) {
+    alert(item.title);
   }
 
   deleteItem(item) {
     this.$http.delete('/api/items/' + item._id);
+  }
+
+  onBlur (item) {
+    this.saveItem(item);
+    this.originalItem = null;
   }
 
   toggleCompleted(item) {
@@ -65,6 +69,25 @@ export class ListComponent {
     this.$http.put('/api/items/'+ item._id, { completed: newVal} );
     item.completed = newVal;
   }
+
+  setStatusFilter(newStatus){
+    this.statusFilter = newStatus === 'all' || newStatus === 'completed' || newStatus === 'active' ? newStatus : 'all';
+  }
+
+  filterByStatus (items) {
+    var filteredItems = this.myItems.filter(function(item){
+      if (this.statusFilter === 'all') {
+        return true;
+      }
+      if (this.statusFilter === 'completed' && item.completed) {
+        return true;
+      }
+      if (this.statusFilter === 'active' && !item.completed) {
+        return true;
+      }
+    });
+    return filteredItems;
+  };
 }
 
 export default angular.module('webappno1App.list', [uiRouter])
