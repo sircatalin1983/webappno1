@@ -7,14 +7,14 @@ export class ListComponent {
   $http;
   socket;
   
+  loadingItems = true;
+
   myItems = [];
   newItem = '';
 
-  loadingItems = true;
-
   originalItem = null;
   
-  statusFilter = false;
+  statusFilter = "all";
 
   /*@ngInject*/
   constructor($http, $scope, socket) {
@@ -52,16 +52,12 @@ export class ListComponent {
   }
 
   saveItem(item) {
-    alert(item.title);
+    this.$http.put('/api/items/'+ item._id, { title: item.title} );
+    this.originalItem = null;
   }
 
   deleteItem(item) {
     this.$http.delete('/api/items/' + item._id);
-  }
-
-  onBlur (item) {
-    this.saveItem(item);
-    this.originalItem = null;
   }
 
   toggleCompleted(item) {
@@ -75,17 +71,21 @@ export class ListComponent {
   }
 
   filterByStatus (items) {
-    var filteredItems = this.myItems.filter(function(item){
+    var filteredItems = [];
+    var i =0;
+
+    for (let entry of this.myItems) {
       if (this.statusFilter === 'all') {
-        return true;
+        filteredItems[i++] = entry;
       }
-      if (this.statusFilter === 'completed' && item.completed) {
-        return true;
+      if (this.statusFilter === 'completed' && entry.completed) {
+        filteredItems[i++] = entry;
       }
-      if (this.statusFilter === 'active' && !item.completed) {
-        return true;
+      if (this.statusFilter === 'active' && !entry.completed) {
+        filteredItems[i++] = entry;
       }
-    });
+    }
+    
     return filteredItems;
   };
 }

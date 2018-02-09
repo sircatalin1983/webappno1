@@ -12,27 +12,27 @@
         <input id="new-todo" class="new-todo" placeholder="New items on the list?" ng-model="$ctrl.newItem" ng-disabled="saving" autofocus>
     </form>
 
-    <section id="main" class="main" ng-cloak ng-if="$ctrl.myItems.length > 0">
+    <section id="main" class="main" ng-if="$ctrl.myItems.length > 0">
         <div id="todo-list" class="todo-list">
             <ul>
-                <li ng-repeat="item in $ctrl.myItems track by $index" ng-class="{completed: item.completed, editing: item==$ctrl.originalItem}">
+                <li ng-repeat="item in $ctrl.filterByStatus($ctrl.myItems) track by $index" ng-class="{completed: item.completed, editing: item==$ctrl.originalItem}">
                     <div class="view" class="todo">
                         <button class="toggle" ng-class="{'checked': item.completed}" ng-click="$ctrl.toggleCompleted(item)"></button>
-                        <label ng-dblclick="$ctrl.editItem(item)">{{item.title}}</label>
+                        <label ng-dblclick="$ctrl.editItem(item)">{{item.title}}__{{$index}}</label>
                         <button class="destroy icon" ng-click="$ctrl.deleteItem(item)"></button>
                     </div>
                     <form ng-submit="$ctrl.saveItem(item, 'submit')">
-                        <input class="edit" ng-model="item.title" ng-blur="$ctrl.onBlur(item)">
+                        <input class="edit" ng-model="item.title" ng-blur="$ctrl.saveItem(item)">
                     </form>
                 </li>
             </ul>
             <i ng-if="loadingItems" class="fa fa-spinner fa-pulse fa-3x fa-fw loader"></i>            
         </div>
 
-        <footer id="footer" class="footer" ng-show="$ctrl.myItems.length" ng-cloak>
+        <footer id="footer" class="footer" ng-show="$ctrl.myItems.length > 0">
             <span id="todo-count" class="todo-count">
-                <strong>{{remainingCount}}</strong>
-                <ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
+                <strong>{{$ctrl.myItems.length}}</strong>
+                <ng-pluralize count="$ctrl.myItems.length" when="{ one: 'item left', other: 'items left' }">ssss</ng-pluralize>aaaa
             </span>
             <ul id="filters" class="filters">
                 <li><a class="do-all" ng-class="{selected: status == ''} " ng-click="$ctrl.setStatusFilter('all')">All</a></li>
