@@ -10,10 +10,12 @@ export class ListComponent {
   myItems = [];
   newItem = '';
 
+  //used during loading 
   loadingItems = true;
 
-  editedItem = null;
-  itemUnderEdit = null;
+  //used during edit  
+  editedItem = null;    //edited item
+  originalItem = null;  //original item to restore to after edit
   
   /*@ngInject*/
   constructor($http, $scope, socket) {
@@ -45,15 +47,16 @@ export class ListComponent {
 
   editItem(item) {
     this.editedItem = item;
-    this.itemUnderEdit = angular.extend({}, item);
+    this.originalItem = angular.extend({}, item);
   }
 
   undoItem(item) {
-    alert(item);
+    this.editedItem = null;
+    item = this.originalItem;
   }
   
   saveItem(item, event) {
-   
+    
   }
 
   deleteItem(item) {
