@@ -12,57 +12,57 @@
         <input id="new-todo" class="new-todo" placeholder="New items on the list?" ng-model="$ctrl.newItem" ng-disabled="saving" autofocus>
     </form>
 
-    <section id="main" class="main" ng-cloak>
+    <section id="main" class="main" ng-if="$ctrl.myItems.length > 0">
         <div id="todo-list" class="todo-list">
-            <ul ng-if="!loadingItems">
-                <li ng-repeat="item in $ctrl.myItems" ng-class="{completed: item.completed, editing: item == $ctrl.editedItem }">
+            <ul>
+                <li ng-repeat="item in $ctrl.filterByStatus($ctrl.myItems) track by $index" ng-class="{completed: item.completed, editing: item==$ctrl.originalItem}">
                     <div class="view" class="todo">
-                        <button ng-class="{'checked': item.completed}" class="toggle" ng-click="$ctrl.toggleCompleted(item)"></button>
+                        <button class="toggle" ng-class="{'checked': item.completed}" ng-click="$ctrl.toggleCompleted(item)"></button>
                         <label ng-dblclick="$ctrl.editItem(item)">{{item.title}}</label>
                         <button class="destroy icon" ng-click="$ctrl.deleteItem(item)"></button>
                     </div>
                     <form ng-submit="$ctrl.saveItem(item, 'submit')">
-                        <input class="edit" ng-trim="false" ng-model="item.title" todo-escape="$ctrl.undoItem(item)" ng-blur="$ctrl.saveItem(item, 'blur')"
-                            todo-focus="item == $ctrl.editedItem">
+                        <input class="edit" ng-model="item.title" ng-blur="$ctrl.saveItem(item)">
                     </form>
                 </li>
             </ul>
-            <i ng-if="loadingItems" class="fa fa-spinner fa-pulse fa-3x fa-fw loader"></i>
-            <!--
-            <ul ng-if="!loadingTodos">
-                <li ng-repeat="todo in filterByStatus(todos) track by $index" ng-class="{completed: todo.completed, editing: todo == editedTodo}">
-                    <div class="view" class="todo">
-                        <button ng-class="{'checked': todo.completed}" class="toggle" ng-click="toggleCompleted(todo)"></button>
-                        <label ng-dblclick="editTodo(todo)">{{todo.title}}</label>
-                        <button class="destroy icon" ng-click="removeTodo(todo)"></button>
-                    </div>
-                    <form ng-submit="saveEdits(todo, 'submit')">
-                        <input class="edit" ng-trim="false" ng-model="todo.title" todo-escape="revertEdits(todo)" ng-blur="saveEdits(todo, 'blur')"
-                            todo-focus="todo == editedTodo">
-                    </form>
-                </li>
-            </ul>
-            <i ng-if="loadingTodos" class="fa fa-spinner fa-pulse fa-3x fa-fw loader"></i>
-        -->
+            <i ng-if="loadingItems" class="fa fa-spinner fa-pulse fa-3x fa-fw loader"></i>            
         </div>
 
-        <footer id="footer" class="footer" ng-show="$ctrl.myItems.length" ng-cloak>
+        <span id="footer" class="footer" ng-show="$ctrl.myItems.length > 0">
+            <div id="todo-count" class="todo-count">
+                <strong>{{$ctrl.myItems.length}}</strong>
+                <ng-pluralize count="$ctrl.myItems.length" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
+            </div>
+            <div>
+                <ul class="filters">
+                    <li><a class="do-all" ng-class="{selected: status == ''} " ng-click="$ctrl.setStatusFilter('all')">All</a></li>
+                    <li><a class="do-active" ng-class="{selected: status == 'active'}" ng-click="$ctrl.setStatusFilter('active')">Active</a></li>
+                    <li><a class="do-completed" ng-class="{selected: status == 'completed'}" ng-click="$ctrl.setStatusFilter('completed')">Completed</a></li>
+                </ul>
+                
+            </div>
+            <div>
+                <br/>
+                <button id="clear-completed" ng-click="$ctrl.clearCompleted()">Clear completed</button>
+            </div>
+        </span>
+       
+<!--
+        <footer id="footer" class="footer" ng-show="$ctrl.myItems.length > 0">ddd
             <span id="todo-count" class="todo-count">
-                <strong>{{remainingCount}}</strong>
-                <ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
+                <strong>{{$ctrl.myItems.length}}</strong>
+                <ng-pluralize count="$ctrl.myItems.length" when="{ one: 'item left', other: 'items left' }">ssss</ng-pluralize>
             </span>
             <ul id="filters" class="filters">
-                <li>
-                    <a class="do-all" ng-class="{selected: status == ''} " ng-click="setStatusFilter('all')">All</a>
-                </li>
-                <li>
-                    <a class="do-active" ng-class="{selected: status == 'active'}" ng-click="setStatusFilter('active')">Active</a>
-                </li>
-                <li>
-                    <a class="do-completed" ng-class="{selected: status == 'completed'}" ng-click="setStatusFilter('completed')">Completed</a>
-                </li>
+                <li><a class="do-all" ng-class="{selected: status == ''} " ng-click="$ctrl.setStatusFilter('all')">All</a></li>
+                <li><a class="do-active" ng-class="{selected: status == 'active'}" ng-click="$ctrl.setStatusFilter('active')">Active</a></li>
+                <li><a class="do-completed" ng-class="{selected: status == 'completed'}" ng-click="$ctrl.setStatusFilter('completed')">Completed</a></li>
             </ul>
             <button id="clear-completed" ng-click="clearCompletedTodos()" ng-show="completedCount">Clear completed</button>
         </footer>
+    
+-->
+
     </section>
 </section>

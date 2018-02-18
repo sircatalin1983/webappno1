@@ -10,10 +10,16 @@ export class ListsComponent {
   myLists = [];
   newList = '';
 
+  Auth;  
+  loggedUser;
+  
   /*@ngInject*/
-  constructor($http, $scope, socket) {
+  constructor($http, $scope, socket, Auth) {
     this.$http = $http;
     this.socket = socket;
+    
+    this.Auth = Auth;
+    this.loggedUser = this.Auth.getCurrentUserSync();
 
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('list');
@@ -23,7 +29,7 @@ export class ListsComponent {
   $onInit() {
     var vm = this;
 
-    this.$http.get('/api/lists').then(response => {
+    this.$http.get('/api/lists/' + this.loggedUser._id + '/lists').then(response => {
       this.myLists = response.data;
       this.socket.syncUpdates('list', this.myLists);
     });
@@ -31,7 +37,7 @@ export class ListsComponent {
 
   addList() {
     if (this.newList) {
-      this.$http.post('/api/lists', { name: this.newList, info: "fff", owner: "dddd" });
+      this.$http.post('/api/lists', { name: this.newList, info: "", owner: this.loggedUser._id });
       this.newList = '';
     }
   }

@@ -79,6 +79,13 @@ export function show(req, res) {
     .catch(handleError(res));
 }
 
+// Gets a list of Items by an ID
+export function showItemsInList(req, res) {
+  return Item.find({'idList' : req.params.idList}).exec()
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
 // Creates a new Item in the DB
 export function create(req, res) {
   return Item.create(req.body)

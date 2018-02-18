@@ -79,6 +79,14 @@ export function show(req, res) {
     .catch(handleError(res));
 }
 
+// Gets a list of Lists of a Owner
+export function ownerLists(req, res) {
+  return List.find({'owner' : req.params.idOwner}).exec()
+    .then(handleEntityNotFound(res))
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
 // Creates a new List in the DB
 export function create(req, res) {
   return List.create(req.body)

@@ -7,20 +7,24 @@ export class ListComponent {
   $http;
   socket;
   
+  loadingItems = true;
+
   myItems = [];
   newItem = '';
 
-  //used during loading 
-  loadingItems = true;
-
-  //used during edit  
-  editedItem = null;    //edited item
-  originalItem = null;  //original item to restore to after edit
+  originalItem = null;
   
+  statusFilter = "all";
+
+  idList = "";
+//
+
   /*@ngInject*/
-  constructor($http, $scope, socket) {
+  constructor($http, $scope, socket, $state) {
     this.$http = $http;
     this.socket = socket;
+    
+    this.idList = $state.params['idList'];
 
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('item');
@@ -30,33 +34,32 @@ export class ListComponent {
   $onInit() {
     var vm = this;
 
-    this.$http.get('/api/items').then(response => {
+    this.loadingItems = true;
+
+    this.setStatusFilter('all');
+
+    this.$http.get('/api/items/' + this.idList + '/items').then(response => {
       this.myItems = response.data;
       this.socket.syncUpdates('item', this.myItems);
     });
-
-    this.loadingItems = false;
+    
+    this.loadingItems = false;    
   }
 
   addItem() {
     if (this.newItem) {
-      this.$http.post('/api/items', { title: this.newItem, info: "" });
+      this.$http.post('/api/items', { title: this.newItem, info: "", idList: this.idList });
       this.newItem = '';
     }
   }
 
   editItem(item) {
-    this.editedItem = item;
-    this.originalItem = angular.extend({}, item);
+    this.originalItem = item;
   }
 
-  undoItem(item) {
-    this.editedItem = null;
-    item = this.originalItem;
-  }
-  
-  saveItem(item, event) {
-    
+  saveItem(item) {
+    this.$http.put('/api/items/'+ item._id, { title: item.title} );
+    this.originalItem = null;
   }
 
   deleteItem(item) {
@@ -68,6 +71,33 @@ export class ListComponent {
     this.$http.put('/api/items/'+ item._id, { completed: newVal} );
     item.completed = newVal;
   }
+
+  clearCompleted() {
+    alert('test');
+  }
+
+  setStatusFilter(newStatus){
+    this.statusFilter = newStatus === 'all' || newStatus === 'completed' || newStatus === 'active' ? newStatus : 'all';
+  }
+
+  filterByStatus (items) {
+    var filteredItems = [];
+    var i =0;
+
+    for (let entry of this.myItems) {
+      if (this.statusFilter === 'all') {
+        filteredItems[i++] = entry;
+      }
+      if (this.statusFilter === 'completed' && entry.completed) {
+        filteredItems[i++] = entry;
+      }
+      if (this.statusFilter === 'active' && !entry.completed) {
+        filteredItems[i++] = entry;
+      }
+    }
+    
+    return filteredItems;
+  };
 }
 
 export default angular.module('webappno1App.list', [uiRouter])
