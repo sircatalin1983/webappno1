@@ -1,5 +1,5 @@
 <header class="hero-unit" id="banner">
-
+        http://todomvc.com/examples/angularjs/#/
 </header>
 
 <section id="todoapp" class="todoapp" style="min-height: 300px">
@@ -18,7 +18,7 @@
                 <li ng-repeat="item in $ctrl.filterByStatus($ctrl.myItems) track by $index" ng-class="{completed: item.completed, editing: item==$ctrl.originalItem}">
                     <div class="view" class="todo">
                         <button class="toggle" ng-class="{'checked': item.completed}" ng-click="$ctrl.toggleCompleted(item)"></button>
-                        <label ng-dblclick="$ctrl.editItem(item)">{{item.title}}__{{$index}}</label>
+                        <label ng-dblclick="$ctrl.editItem(item)">{{item.title}}</label>
                         <button class="destroy icon" ng-click="$ctrl.deleteItem(item)"></button>
                     </div>
                     <form ng-submit="$ctrl.saveItem(item, 'submit')">
@@ -29,10 +29,30 @@
             <i ng-if="loadingItems" class="fa fa-spinner fa-pulse fa-3x fa-fw loader"></i>            
         </div>
 
-        <footer id="footer" class="footer" ng-show="$ctrl.myItems.length > 0">
+        <span id="footer" class="footer" ng-show="$ctrl.myItems.length > 0">
+            <div id="todo-count" class="todo-count">
+                <strong>{{$ctrl.myItems.length}}</strong>
+                <ng-pluralize count="$ctrl.myItems.length" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
+            </div>
+            <div>
+                <ul class="filters">
+                    <li><a class="do-all" ng-class="{selected: status == ''} " ng-click="$ctrl.setStatusFilter('all')">All</a></li>
+                    <li><a class="do-active" ng-class="{selected: status == 'active'}" ng-click="$ctrl.setStatusFilter('active')">Active</a></li>
+                    <li><a class="do-completed" ng-class="{selected: status == 'completed'}" ng-click="$ctrl.setStatusFilter('completed')">Completed</a></li>
+                </ul>
+                
+            </div>
+            <div>
+                <br/>
+                <button id="clear-completed" ng-click="$ctrl.clearCompleted()">Clear completed</button>
+            </div>
+        </span>
+       
+<!--
+        <footer id="footer" class="footer" ng-show="$ctrl.myItems.length > 0">ddd
             <span id="todo-count" class="todo-count">
                 <strong>{{$ctrl.myItems.length}}</strong>
-                <ng-pluralize count="$ctrl.myItems.length" when="{ one: 'item left', other: 'items left' }">ssss</ng-pluralize>aaaa
+                <ng-pluralize count="$ctrl.myItems.length" when="{ one: 'item left', other: 'items left' }">ssss</ng-pluralize>
             </span>
             <ul id="filters" class="filters">
                 <li><a class="do-all" ng-class="{selected: status == ''} " ng-click="$ctrl.setStatusFilter('all')">All</a></li>
@@ -41,5 +61,8 @@
             </ul>
             <button id="clear-completed" ng-click="clearCompletedTodos()" ng-show="completedCount">Clear completed</button>
         </footer>
+    
+-->
+
     </section>
 </section>

@@ -31,7 +31,7 @@
     text-align: center;
     padding: 30px 0;
     margin-top: 70px;
-    border-top: 1px solid #E5E5E5;
+    border-top: 1px solid rgb(212, 11, 11);
   }
   
   .navbar-text {
@@ -304,7 +304,7 @@
     padding: 10px 15px;
     height: 20px;
     text-align: center;
-    border-top: 1px solid #e6e6e6;
+    border-top: 1px solid #8d1d1d;
   }
   
   .footer:before {

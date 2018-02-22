@@ -7,6 +7,7 @@ var proxyquire = require('proxyquire').noPreserveCache();
 var itemCtrlStub = {
   index: 'itemCtrl.index',
   show: 'itemCtrl.show',
+  showItemsInList: 'itemCtrl.showItemsInList',
   create: 'itemCtrl.create',
   upsert: 'itemCtrl.upsert',
   patch: 'itemCtrl.patch',

@@ -16,10 +16,15 @@ export class ListComponent {
   
   statusFilter = "all";
 
+  idList = "";
+//
+
   /*@ngInject*/
-  constructor($http, $scope, socket) {
+  constructor($http, $scope, socket, $state) {
     this.$http = $http;
     this.socket = socket;
+    
+    this.idList = $state.params['idList'];
 
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('item');
@@ -30,19 +35,20 @@ export class ListComponent {
     var vm = this;
 
     this.loadingItems = true;
+
     this.setStatusFilter('all');
 
-    this.$http.get('/api/items').then(response => {
+    this.$http.get('/api/items/' + this.idList + '/items').then(response => {
       this.myItems = response.data;
       this.socket.syncUpdates('item', this.myItems);
     });
-
+    
     this.loadingItems = false;    
   }
 
   addItem() {
     if (this.newItem) {
-      this.$http.post('/api/items', { title: this.newItem, info: "" });
+      this.$http.post('/api/items', { title: this.newItem, info: "", idList: this.idList });
       this.newItem = '';
     }
   }
@@ -64,6 +70,10 @@ export class ListComponent {
     var newVal = !item.completed;
     this.$http.put('/api/items/'+ item._id, { completed: newVal} );
     item.completed = newVal;
+  }
+
+  clearCompleted() {
+    alert('test');
   }
 
   setStatusFilter(newStatus){

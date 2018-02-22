@@ -7,13 +7,13 @@
     <div class="col-lg-12">
       <h1 class="page-header">My Lists:</h1>
       <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="list in $ctrl.myLists">
-        <li><a href="/list/{{list._id}}" uib-tooltip="{{list.info}}">{{list.name}}_____{{list._id}}_{{list.owner}}<button type="button" class="close" ng-click="$ctrl.deleteList(list)">&times;</button></a></li>
+        <li><a href="/list/{{list._id}}" uib-tooltip="{{list.info}}">{{list.name}}<button type="button" class="close" ng-click="$ctrl.deleteList(list)">&times;</button></a></li>
       </ul>
     </div>
   </div>
 
   <form class="list-form">
-    <label>Create new lists</label>
+    <label>Create new lists Hello {{ $ctrl.getCurrentUser() }}</label>
     <p class="input-group">
       <input type="text" class="form-control" placeholder="Add a new list name here." ng-model="$ctrl.newList">
       <span class="input-group-btn">
