@@ -17,7 +17,14 @@ export class ListsComponent {
 
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('list');
-    });
+    });   
+
+    var user = null;
+    console.log('test' + $scope.getCurrentUser._id);  
+    //user = $scope.getCurrentUser().then()(function(result){
+      //console.log('test' + user._id);  
+      //return result;
+   /// });
   }
 
   $onInit() {
