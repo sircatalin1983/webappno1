@@ -1,111 +1,30 @@
-
-/**
- * Todos
- */
-
- .thing-form {
-    margin: 20px 0;
-  }
-  
-  #banner {
-    border-bottom: none;
-    margin-top: -20px;
-  }
-  
-  #banner h1 {
-    font-size: 60px;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-  
-  .hero-unit {
-    position: relative;
-    padding: 30px 15px;
-    color: #F5F5F5;
-    text-align: center;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-    background: #4393B9;
-  }
-  
-  .footer {
-    text-align: center;
-    padding: 30px 0;
-    margin-top: 70px;
-    border-top: 1px solid rgb(212, 11, 11);
-  }
-  
-  .navbar-text {
-    margin-left: 15px;
-  }
-  
-  html,
-  body {
-    margin: 0;
-    padding: 0;
-  }
-  
-  button {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    background: none;
-    font-size: 100%;
-    vertical-align: baseline;
-    font-family: inherit;
-    font-weight: inherit;
-    color: inherit;
-    -webkit-appearance: none;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  
-  body {
-    font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    line-height: 1.4em;
-    background: #f5f5f5;
-    color: #4d4d4d;
-    min-width: 230px;
-    margin: 0 auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-weight: 300;
-  }
-  
-  :focus {
-    outline: 0;
-  }
-  
-  .hidden {
-    display: none;
-  }
-  
-  .todoapp {
+  .myapp {
     background: #fff;
-    margin: 130px 0 40px 0;
+    margin: 10px 0 10px 0;
     position: relative;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),
     0 25px 50px 0 rgba(0, 0, 0, 0.1);
   }
   
-  .todoapp input::-webkit-input-placeholder {
+  .myapp input::-webkit-input-placeholder {
     font-style: italic;
     font-weight: 300;
     color: #e6e6e6;
   }
   
-  .todoapp input::-moz-placeholder {
+  .myapp input::-moz-placeholder {
     font-style: italic;
     font-weight: 300;
     color: #e6e6e6;
   }
   
-  .todoapp input::input-placeholder {
+  .myapp input::input-placeholder {
     font-style: italic;
     font-weight: 300;
     color: #e6e6e6;
   }
   
-  .todoapp h1 {
+  .myapp h1 {
     position: absolute;
     top: -155px;
     width: 100%;
@@ -118,7 +37,7 @@
     text-rendering: optimizeLegibility;
   }
   
-  .new-todo,
+  .new-item,
   .edit {
     position: relative;
     margin: 0;
@@ -137,7 +56,7 @@
     -moz-osx-font-smoothing: grayscale;
   }
   
-  .new-todo {
+  .new-item {
     padding: 16px 16px 16px 60px;
     border: none;
     background: rgba(0, 0, 0, 0.003);
@@ -175,7 +94,7 @@
     color: #110404;
   }
   
-  .todo-list .loader {
+  .my-list .loader {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -183,39 +102,39 @@
     margin-top: 90px; /* -1 * image height / 2 */
   }
   
-  .todo-list ul {
+  .my-list ul {
     margin: 0;
     padding: 0;
     list-style: none;
   }
   
-  .todo-list li {
+  .my-list li {
     position: relative;
     font-size: 24px;
     border-bottom: 1px solid #ededed;
   }
   
-  .todo-list li:last-child {
+  .my-list li:last-child {
     border-bottom: none;
   }
   
-  .todo-list li.editing {
+  .my-list li.editing {
     border-bottom: none;
     padding: 0;
   }
   
-  .todo-list li.editing .edit {
+  .my-list li.editing .edit {
     display: block;
-    width: 506px;
+    width: 100%;
     padding: 12px 16px;
-    margin: 0 0 0 43px;
+    margin: 0 0 0 0px;
   }
   
-  .todo-list li.editing .view {
+  .my-list li.editing .view {
     display: none;
   }
   
-  .todo-list li .toggle {
+  .my-list li .toggle {
     text-align: center;
     width: 40px;
     /* auto, since non-WebKit browsers doesn't support input styling */
@@ -228,15 +147,15 @@
     -webkit-appearance: none;
   }
   
-  .todo-list li .toggle:after {
+  .my-list li .toggle:after {
     content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#ededed" stroke-width="3"/></svg>');
   }
   
-  .todo-list li .toggle.checked:after {
+  .my-list li .toggle.checked:after {
     content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
   }
   
-  .todo-list li label {
+  .my-list li label {
     word-break: break-all;
     padding: 15px 60px 15px 15px;
     margin-left: 45px;
@@ -245,12 +164,12 @@
     transition: color 0.4s;
   }
   
-  .todo-list li.completed label {
+  .my-list li.completed label {
     color: #d9d9d9;
     text-decoration: line-through;
   }
   
-  .todo-list li .icon {
+  .my-list li .icon {
     display: none;
     position: absolute;
     top: 0;
@@ -266,36 +185,36 @@
     font-size: 20px;
   }
   
-  .todo-list li .high-priority.icon,.destroy.icon {
+  .my-list li .high-priority.icon,.destroy.icon {
     right: 45px;
     color: #cc9a9a;
   }
   
-  .todo-list li .destroy:hover, .todo-list li .high-priority:hover {
+  .my-list li .destroy:hover, .my-list li .high-priority:hover {
     color: #af5b5e;
   }
   
-  .todo-list li .high-priority:hover, .todo-list li .high-priority.checked {
+  .my-list li .high-priority:hover, .my-list li .high-priority.checked {
     color: #af5b5e;
   }
   
-  .todo-list li .destroy:after {
+  .my-list li .destroy:after {
     content: '\f00d';
   }
   
-  .todo-list li .high-priority:before {
+  .my-list li .high-priority:before {
     content: '\f12a';
   }
 
-  .todo-list li:hover .icon, .todo-list .high-priority.checked {
+  .my-list li:hover .icon, .my-list .high-priority.checked {
     display: block;
   }
   
-  .todo-list li .edit {
+  .my-list li .edit {
     display: none;
   }
   
-  .todo-list li.editing:last-child {
+  .my-list li.editing:last-child {
     margin-bottom: -1px;
   }
   
@@ -322,12 +241,12 @@
     0 17px 2px -6px rgba(0, 0, 0, 0.2);
   }
   
-  .todo-count {
+  .item-count {
     float: left;
     text-align: left;
   }
   
-  .todo-count strong {
+  .item-count strong {
     font-weight: 300;
   }
   
@@ -361,64 +280,3 @@
     border-color: rgba(175, 47, 47, 0.2);
   }
   
-  .clear-completed,
-  html .clear-completed:active {
-    float: right;
-    position: relative;
-    line-height: 20px;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  
-  .clear-completed:hover {
-    text-decoration: underline;
-  }
-  
-  .info {
-    margin: 65px auto 0;
-    color: #bfbfbf;
-    font-size: 10px;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-    text-align: center;
-  }
-  
-  .info p {
-    line-height: 1;
-  }
-  
-  .info a {
-    color: inherit;
-    text-decoration: none;
-    font-weight: 400;
-  }
-  
-  .info a:hover {
-    text-decoration: underline;
-  }
-  
-  @media screen and (-webkit-min-device-pixel-ratio:0) {
-    .toggle-all,
-    .todo-list li .toggle {
-      background: none;
-    }
-  
-    .todo-list li .toggle {
-      height: 40px;
-    }
-  
-    .toggle-all {
-      -webkit-transform: rotate(90deg);
-      transform: rotate(90deg);
-      -webkit-appearance: none;
-    }
-  }
-  
-  @media (max-width: 430px) {
-    .footer {
-      height: 50px;
-    }
-  
-    .filters {
-      bottom: 10px;
-    }
-  }
