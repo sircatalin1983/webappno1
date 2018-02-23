@@ -25,8 +25,8 @@ export class ListsComponent {
       socket.unsyncUpdates('list');
     });   
 
-    var user = null;
-    console.log('test' + $scope.getCurrentUser._id);  
+    console.log('Id of user: ' + this.loggedUser._id );  
+    
     //user = $scope.getCurrentUser().then()(function(result){
       //console.log('test' + user._id);  
       //return result;
