@@ -1,17 +1,17 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/lists              ->  index
- * POST    /api/lists              ->  create
- * GET     /api/lists/:id          ->  show
- * PUT     /api/lists/:id          ->  upsert
- * PATCH   /api/lists/:id          ->  patch
- * DELETE  /api/lists/:id          ->  destroy
+ * GET     /api/userlists              ->  index
+ * POST    /api/userlists              ->  create
+ * GET     /api/userlists/:id          ->  show
+ * PUT     /api/userlists/:id          ->  upsert
+ * PATCH   /api/userlists/:id          ->  patch
+ * DELETE  /api/userlists/:id          ->  destroy
  */
 
 'use strict';
 
 import jsonpatch from 'fast-json-patch';
-import List from './list.model';
+import UserList from './userlist.model';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -64,62 +64,65 @@ function handleError(res, statusCode) {
   };
 }
 
-// Gets a list of Lists
+// Gets a list of Userlists
 export function index(req, res) {
-  return List.find().exec()
+  return UserList.find().exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Gets a single List from the DB
+// Gets a single Userlist from the DB
 export function show(req, res) {
-  return List.findById(req.params.id).exec()
+  return UserList.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
-/*
-// Gets a list of Lists of a Owner
-export function ownerLists(req, res) {
-  return List.find({'owner' : req.params.idOwner}).exec()
-    .then(handleEntityNotFound(res))
-    .then(respondWithResult(res))
-    .catch(handleError(res));
+
+// Gets a single Userlist from the DB by role
+export function showLists(req, res) {
+  return UserList.find({
+    idUser : req.params.idUser
+  })
+  .select ( { idUser : 1, idList : 1, role : 1} )
+  .exec()
+  .then(respondWithResult(res))
+  .catch(handleError(res));
 }
-//*/
-// Creates a new List in the DB
+
+// Creates a new Userlist in the DB
 export function create(req, res) {
-  return List.create(req.body)
+  return UserList.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
-// Upserts the given List in the DB at the specified ID
+// Upserts the given Userlist in the DB at the specified ID
 export function upsert(req, res) {
   if(req.body._id) {
     Reflect.deleteProperty(req.body, '_id');
   }
-  return List.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
+  return UserList.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
 
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Updates an existing List in the DB
+// Updates an existing Userlist in the DB
 export function patch(req, res) {
   if(req.body._id) {
     Reflect.deleteProperty(req.body, '_id');
   }
-  return List.findById(req.params.id).exec()
+  return UserList.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(patchUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Deletes a List from the DB
+// Deletes a Userlist from the DB
 export function destroy(req, res) {
-  return List.findById(req.params.id).exec()
+  return UserList.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));

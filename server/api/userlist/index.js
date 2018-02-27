@@ -1,13 +1,13 @@
 'use strict';
 
 var express = require('express');
-var controller = require('./list.controller');
+var controller = require('./userlist.controller');
 
 var router = express.Router();
 
 router.get('/', controller.index);
 router.get('/:id', controller.show);
-//router.get('/:idOwner/lists', controller.ownerLists);
+router.get('/:idUser/items', controller.showLists);
 router.post('/', controller.create);
 router.put('/:id', controller.upsert);
 router.patch('/:id', controller.patch);

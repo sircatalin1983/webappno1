@@ -6,7 +6,10 @@ import {registerEvents} from './item.events';
 var ItemSchema = new mongoose.Schema({
   title: String,
   completed: Boolean,
-  idList: String
+  idList: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'List'
+  }
 });
 
 registerEvents(ItemSchema);

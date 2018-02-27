@@ -25,8 +25,8 @@ export class ListsComponent {
       socket.unsyncUpdates('list');
     });   
 
-    var user = null;
-    console.log('test' + $scope.getCurrentUser._id);  
+    //var user = null;
+    //console.log('test' + $scope.getCurrentUser._id);  
     //user = $scope.getCurrentUser().then()(function(result){
       //console.log('test' + user._id);  
       //return result;
@@ -35,8 +35,27 @@ export class ListsComponent {
 
   $onInit() {
     var vm = this;
-
+/*
     this.$http.get('/api/lists/' + this.loggedUser._id + '/lists').then(response => {
+      this.myLists = response.data;
+      this.socket.syncUpdates('list', this.myLists);
+    });
+    */
+
+    //get the lists where I'm an owner
+    this.$http.get('/api/userlists/' + this.loggedUser._id + '/items').then(response => {
+      var myLists = response.data;
+
+      myLists.forEach(element => {
+        if (element.idList) {
+          this.$http.get('/api/lists/' + element.idList).then(response => {
+            var list = response.data;
+            this.myLists.push(list);
+          });
+        }
+      });
+
+      console.log(myLists);
       this.myLists = response.data;
       this.socket.syncUpdates('list', this.myLists);
     });
@@ -44,7 +63,10 @@ export class ListsComponent {
 
   addList() {
     if (this.newList) {
-      this.$http.post('/api/lists', { name: this.newList, info: "", owner: this.loggedUser._id });
+      this.$http.post('/api/lists', { name: this.newList, info: "", owner: this.loggedUser._id }).then(response => {
+        var list = response.data;
+        this.$http.post('/api/userlists', { idUser: this.loggedUser._id, idList: list._id, role: 'owner' });
+      });
       this.newList = '';
     }
   }

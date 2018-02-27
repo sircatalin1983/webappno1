@@ -73,7 +73,10 @@ export class ListComponent {
   }
 
   clearCompleted() {
-    alert('test');
+    this.myItems.forEach(element => {
+      if (element.completed)
+        this.toggleCompleted(element);
+    });
   }
 
   setStatusFilter(newStatus){
