@@ -12,5 +12,6 @@ router.post('/', controller.create);
 router.put('/:id', controller.upsert);
 router.patch('/:id', controller.patch);
 router.delete('/:id', controller.destroy);
+router.delete('/:idList/items', controller.destroyLists);
 
 module.exports = router;

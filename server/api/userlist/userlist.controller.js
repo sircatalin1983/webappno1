@@ -127,3 +127,13 @@ export function destroy(req, res) {
     .then(removeEntity(res))
     .catch(handleError(res));
 }
+
+// Deletes a Userlist from the DB by idList
+export function destroyLists(req, res) {
+  return UserList.find({
+    idList: req.params.idList
+  }).exec()
+    .then(handleEntityNotFound(res))
+    .then(removeEntity(res))
+    .catch(handleError(res));
+}

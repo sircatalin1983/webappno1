@@ -15,7 +15,7 @@
         </p>
       </form>
       <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="list in $ctrl.myLists">
-        <li>
+        <li ng-show="$ctrl.filterByRole(list, 'owner')">
           <a href="/list/{{list._id}}" uib-tooltip="{{list.info}}">{{list.name}}
             <button type="button" class="close" ng-click="$ctrl.deleteList(list)">&times;</button>
           </a>
