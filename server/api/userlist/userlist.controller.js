@@ -130,6 +130,7 @@ export function destroy(req, res) {
 
 // Deletes a Userlist from the DB by idList
 export function destroyLists(req, res) {
+  console.log('destroy user lists');
   return UserList.find({
     idList: req.params.idList
   }).exec()

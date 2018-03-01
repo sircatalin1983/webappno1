@@ -48,10 +48,11 @@ export class ListsComponent {
 
       myUserLists.forEach(element => {
         if (element.idList) {
-          //this.$http.delete('/api/userlists/' + element.idList + '/items')
+          //this.deleteList(element);
+
           this.$http.get('/api/lists/' + element.idList)
           .catch(error => {
-//            console.log(error);
+            console.log(error);
           })
           .then(response => {
             if(response) {

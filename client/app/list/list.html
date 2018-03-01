@@ -13,11 +13,18 @@
                 </span>
             </p>
         </form>
+        <div class="chip">
+                <img src="assets/images/contact.png" alt="Person" width="96" height="96">
+                John Doe
+              </div> 
+              <div class="chip">
+                    <img src="img_avatar.jpg" alt="Person" width="96" height="96">
+                    John Doe
+                    <span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
+                  </div> 
         <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="list in $ctrl.myLists">
             <li>
-                <a href="/list/{{list._id}}" uib-tooltip="{{list.info}}">{{list.name}}
-                    <button type="button" class="close" ng-click="$ctrl.deleteList(list)">&times;</button>
-                </a>
+                    
             </li>
         </ul>
     </div>
