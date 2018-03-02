@@ -8,9 +8,9 @@ export class ListsComponent {
   $http;
   socket;
   
-  myLists = [];
   newList = '';
-
+  myLists = [];
+  
   Auth;  
   loggedUser;
   
@@ -26,12 +26,8 @@ export class ListsComponent {
       socket.unsyncUpdates('list');
     });   
 
-    //var user = null;
-    //console.log('test' + $scope.getCurrentUser._id);  
-    //user = $scope.getCurrentUser().then()(function(result){
-      //console.log('test' + user._id);  
-      //return result;
-   /// });
+    console.log(' lists: ' + this.myLists );
+    console.log(' numar: ' + this.myLists.length );
   }
 
   $onInit() {
@@ -45,19 +41,26 @@ export class ListsComponent {
 
     this.$http.get('/api/userlists/' + this.loggedUser._id + '/items').then(response => {
       var myUserLists = response.data;
+      var index = 0;
+      this.myLists = new Array(0);
 
       myUserLists.forEach(element => {
         if (element.idList) {
           //this.deleteList(element);
+          console.log(' idList: ' + element.idList + ' idUser: ' + element.idUser + ' role: ' + element.role);
 
           this.$http.get('/api/lists/' + element.idList)
           .catch(error => {
-            console.log(error);
+            console.log('errox ' + error);
           })
           .then(response => {
             if(response) {
               var list = response.data;
-              this.myLists.push(list);
+              this.myLists[index++] = list;
+
+              console.log(' list: ' + list._id);
+              //console.log(' lists: ' + this.myLists );
+              console.log(' numar: ' + this.myLists.length );
             }
           });
         }
@@ -79,19 +82,34 @@ export class ListsComponent {
   }
 
   deleteList(list) {
-    this.$http.delete('/api/lists/' + list._id).then(function(response){
+    console.log(list._id);
+
+    this.$http.delete('/api/userlists/' + list._id + '/items').then(response => {
       console.log(response);
     })
     .catch(error => {
-      console.log(error);
+      var txt = '';
+      for (var x in error) {
+        console.log('eee: ' + error[x]);
+      } 
+      
     });
 
+    /*
     this.$http.delete('/api/userlists/' + list._id + '/items').then(function(response){
       console.log(response);
     })
     .catch(error => {
       console.log(error);
     });
+
+    this.$http.delete('/api/lists/' + list._id).then(function(response){
+      console.log(response);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+    */
   }
 
   filterByRole (item, role) {

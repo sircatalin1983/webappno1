@@ -128,18 +128,6 @@ export function destroy(req, res) {
     .catch(handleError(res));
 }
 
-// Deletes a Userlist from the DB by idList
-export function destroyLists(req, res) {
-  console.log('destroy user lists');
-  return UserList.find({
-    idList: req.params.idList
-  }).exec()
-    .then(handleEntityNotFound(res))
-    .then(removeEntity(res))
-    .catch(handleError(res));
-}
-
-
 // Gets a single Userlist from the DB by role
 export function showUsers(req, res) {
   return UserList.find({
@@ -149,4 +137,13 @@ export function showUsers(req, res) {
   .exec()
   .then(respondWithResult(res))
   .catch(handleError(res));
+}
+
+// Deletes a Userlist from the DB by idList
+export function destroyList(req, res) {
+  console.log('teeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeest');
+  return UserList.find({ idList: req.params.idList }).exec()
+    .then(handleEntityNotFound(res))
+    .then(removeEntity(res))
+    .catch(handleError(res));
 }
