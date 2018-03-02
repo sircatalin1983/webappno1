@@ -1,7 +1,6 @@
 <header class="hero-unit" id="banner">
 
 </header>
-
 <div class="container">
     <div class="row">
         <h1 class="page-header">Members:</h1>
@@ -13,22 +12,20 @@
                 </span>
             </p>
         </form>
+        
+    </div>
+    <div class="chip">
+            <img src="assets/images/contact.png" alt="Person" width="96" height="96"> John Doe
+        </div>
         <div class="chip">
-                <img src="assets/images/contact.png" alt="Person" width="96" height="96">
-                John Doe
-              </div> 
-              <div class="chip">
-                    <img src="img_avatar.jpg" alt="Person" width="96" height="96">
-                    John Doe
-                    <span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
-                  </div> 
+            <img src="assets/images/img_avatar.png" alt="Person" width="96" height="96"> John Doe
+            <span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
+        </div>
         <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="list in $ctrl.myLists">
             <li>
-                    
+
             </li>
         </ul>
-    </div>
-
     <div class="row">
         <h1 class="page-header">My List:</h1>
         <section class="myapp" style="min-height: 300px">
@@ -52,36 +49,36 @@
                         </li>
                     </ul>
                     <i ng-if="loadingItems" class="fa fa-spinner fa-pulse fa-3x fa-fw loader"></i>
-                    </div>
-                    
-                    <span class="footer" ng-show="$ctrl.myItems.length > 0">
-                        <ul class="filters">
-                            <li>
-                                <a class="do-all" ng-class="{selected: status == ''} " ng-click="$ctrl.setStatusFilter('all')">All</a>
-                            </li>
-                            <li>
-                                <a class="do-active" ng-class="{selected: status == 'active'}" ng-click="$ctrl.setStatusFilter('active')">Active</a>
-                            </li>
-                            <li>
-                                <a class="do-completed" ng-class="{selected: status == 'completed'}" ng-click="$ctrl.setStatusFilter('completed')">Completed</a>
-                            </li>
-                        </ul>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <ul class="filters">
-                            <li>
-                                <span>
-                                    <strong>{{$ctrl.myItems.length}}</strong>
-                                    <ng-pluralize count="$ctrl.myItems.length" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
-                                </span>
-                            </li>
-                            <li>
-                                <a ng-click="$ctrl.clearCompleted()">Clear completed</a>
-                            </li>
-                        </ul>
-                    </span>
+                </div>
+
+                <span class="footer" ng-show="$ctrl.myItems.length > 0">
+                    <ul class="filters">
+                        <li>
+                            <a class="do-all" ng-class="{selected: status == ''} " ng-click="$ctrl.setStatusFilter('all')">All</a>
+                        </li>
+                        <li>
+                            <a class="do-active" ng-class="{selected: status == 'active'}" ng-click="$ctrl.setStatusFilter('active')">Active</a>
+                        </li>
+                        <li>
+                            <a class="do-completed" ng-class="{selected: status == 'completed'}" ng-click="$ctrl.setStatusFilter('completed')">Completed</a>
+                        </li>
+                    </ul>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <ul class="filters">
+                        <li>
+                            <span>
+                                <strong>{{$ctrl.myItems.length}}</strong>
+                                <ng-pluralize count="$ctrl.myItems.length" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
+                            </span>
+                        </li>
+                        <li>
+                            <a ng-click="$ctrl.clearCompleted()">Clear completed</a>
+                        </li>
+                    </ul>
+                </span>
             </section>
         </section>
     </div>

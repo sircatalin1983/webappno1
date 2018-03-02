@@ -138,3 +138,15 @@ export function destroyLists(req, res) {
     .then(removeEntity(res))
     .catch(handleError(res));
 }
+
+
+// Gets a single Userlist from the DB by role
+export function showUsers(req, res) {
+  return UserList.find({
+    idList : req.params.idList
+  })
+  .select ( { idUser : 1, idList : 1, role : 1} )
+  .exec()
+  .then(respondWithResult(res))
+  .catch(handleError(res));
+}

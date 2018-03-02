@@ -17,7 +17,9 @@ export class ListComponent {
   statusFilter = "all";
 
   idList = "";
-//
+
+  owner;
+  listUsers = [];
 
   /*@ngInject*/
   constructor($http, $scope, socket, $state) {
@@ -44,6 +46,24 @@ export class ListComponent {
     });
     
     this.loadingItems = false;    
+
+    console.log (' enter ');
+    this.$http.get('/api/userlists/' + this.idList + '/users').then(response => {
+      var myUserLists = response.data;
+
+      myUserLists.forEach(element => {
+        if (element.idList) {
+          if (element.role === 'owner') {
+
+          } 
+          if (element.role === 'user') {
+            
+          }
+          console.log (element.idUser + ' are rolul ' + element.role);
+        }
+      });
+    });
+    console.log (' exit ');
   }
 
   addItem() {
