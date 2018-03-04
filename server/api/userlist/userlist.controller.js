@@ -141,7 +141,6 @@ export function showUsers(req, res) {
 
 // Deletes a Userlist from the DB by idList
 export function destroyList(req, res) {
-  console.log('teeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeest');
   return UserList.find({ idList: req.params.idList }).exec()
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))

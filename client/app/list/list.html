@@ -1,6 +1,7 @@
 <header class="hero-unit" id="banner">
 
 </header>
+
 <div class="container">
     <div class="row">
         <h1 class="page-header">Members:</h1>
@@ -8,24 +9,24 @@
             <p class="input-group">
                 <input type="text" class="form-control" placeholder="Add a new member here." ng-model="$ctrl.newMember">
                 <span class="input-group-btn">
-                    <button type="submit" class="btn btn-primary" ng-click="$ctrl.addMember()">Add Member</button>
+                    <button type="submit" class="btn btn-primary" ng-click="$ctrl.addMember()" >Add Member</button>
                 </span>
             </p>
         </form>
-        
+    </div>
+    
+    <div class="chip">
+        <img src="assets/images/contact.png" alt="Person" width="96" height="96">{{$owner}}
     </div>
     <div class="chip">
-            <img src="assets/images/contact.png" alt="Person" width="96" height="96"> John Doe
-        </div>
-        <div class="chip">
-            <img src="assets/images/img_avatar.png" alt="Person" width="96" height="96"> John Doe
-            <span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
-        </div>
-        <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="list in $ctrl.myLists">
-            <li>
-
-            </li>
-        </ul>
+        <img src="assets/images/img_avatar.png" alt="Person" width="96" height="96"> John Doe
+        <span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
+    </div>
+    <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="x in $ctrl.myUserLists">
+        <li>
+                {{x.idList}}___{{x.role}}___{{x.idUser}}
+        </li>
+    </ul>
     <div class="row">
         <h1 class="page-header">My List:</h1>
         <section class="myapp" style="min-height: 300px">

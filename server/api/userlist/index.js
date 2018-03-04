@@ -12,7 +12,7 @@ router.get('/:idList/users', controller.showUsers);
 router.post('/', controller.create);
 router.put('/:id', controller.upsert);
 router.patch('/:id', controller.patch);
-router.delete('/:id', controller.destroy);
 router.delete('/:idList/items', controller.destroyList);
+router.delete('/:id', controller.destroy);
 
 module.exports = router;

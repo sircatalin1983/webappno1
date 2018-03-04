@@ -6,31 +6,39 @@ import routes from './list.routes';
 export class ListComponent {
   $http;
   socket;
-  
+
   loadingItems = true;
 
   myItems = [];
   newItem = '';
 
   originalItem = null;
-  
+
   statusFilter = "all";
 
   idList = "";
 
   owner;
-  listUsers = [];
+  usersOfList = [];
 
+  usersOfSystem: Object[];
+
+  myUserLists;
+
+  newMember;
   /*@ngInject*/
-  constructor($http, $scope, socket, $state) {
+  constructor($http, $scope, socket, $state, User) {
     this.$http = $http;
     this.socket = socket;
-    
+
     this.idList = $state.params['idList'];
 
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
       socket.unsyncUpdates('item');
+      socket.unsyncUpdates('userlist');
     });
+
+    this.usersOfSystem = User.query();
   }
 
   $onInit() {
@@ -44,26 +52,28 @@ export class ListComponent {
       this.myItems = response.data;
       this.socket.syncUpdates('item', this.myItems);
     });
-    
-    this.loadingItems = false;    
 
-    console.log (' enter ');
     this.$http.get('/api/userlists/' + this.idList + '/users').then(response => {
-      var myUserLists = response.data;
+      this.myUserLists = response.data;
+      this.socket.syncUpdates('userlist', this.myUserLists);
 
-      myUserLists.forEach(element => {
-        if (element.idList) {
-          if (element.role === 'owner') {
-
-          } 
-          if (element.role === 'user') {
-            
+      var index = 0;
+      this.myUserLists.forEach(element => {
+        this.usersOfSystem.forEach(userOfSystem => {
+          if (element.role === 'owner' && userOfSystem['_id'] === element.idUser) {
+            this.owner = userOfSystem;
           }
-          console.log (element.idUser + ' are rolul ' + element.role);
-        }
+          if (element.role === 'user' && userOfSystem['_id'] === element.idUser) {
+            this.usersOfList[index++] = userOfSystem;
+          }
+        });
       });
+      console.log('owneeeer1: ' + this.owner);
+      console.log('owneeeer2: ' + this.myUserLists);
+      console.log('owneeeer3: ' + this.usersOfSystem);
     });
-    console.log (' exit ');
+
+    this.loadingItems = false;
   }
 
   addItem() {
@@ -73,12 +83,35 @@ export class ListComponent {
     }
   }
 
+  addMember() {
+    var newUser;
+    if (this.newMember) {
+      this.usersOfSystem.forEach(user => {
+        if (this.newMember.toLowerCase() === user['name'].toLowerCase() || this.newMember.toLowerCase() === user['email'].toLowerCase()) {
+          newUser = user;
+        }
+      });
+
+      if (newUser) {
+        this.myUserLists.forEach(userList => {
+          if (userList.idUser == newUser._id) {
+            alert('User already in the list!');
+          } else {
+            this.$http.post('/api/userlists', { idUser: newUser._id, idList: this.idList, role: 'user' });
+          }
+        });
+      }
+
+      this.newMember = '';
+    }
+  }
+
   editItem(item) {
     this.originalItem = item;
   }
 
   saveItem(item) {
-    this.$http.put('/api/items/'+ item._id, { title: item.title} );
+    this.$http.put('/api/items/' + item._id, { title: item.title });
     this.originalItem = null;
   }
 
@@ -88,7 +121,7 @@ export class ListComponent {
 
   toggleCompleted(item) {
     var newVal = !item.completed;
-    this.$http.put('/api/items/'+ item._id, { completed: newVal} );
+    this.$http.put('/api/items/' + item._id, { completed: newVal });
     item.completed = newVal;
   }
 
@@ -99,13 +132,13 @@ export class ListComponent {
     });
   }
 
-  setStatusFilter(newStatus){
+  setStatusFilter(newStatus) {
     this.statusFilter = newStatus === 'all' || newStatus === 'completed' || newStatus === 'active' ? newStatus : 'all';
   }
 
-  filterByStatus (items) {
+  filterByStatus(items) {
     var filteredItems = [];
-    var i =0;
+    var i = 0;
 
     for (let entry of this.myItems) {
       if (this.statusFilter === 'all') {
@@ -118,7 +151,7 @@ export class ListComponent {
         filteredItems[i++] = entry;
       }
     }
-    
+
     return filteredItems;
   };
 }

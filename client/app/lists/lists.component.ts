@@ -7,37 +7,37 @@ import { ENOMEM } from 'constants';
 export class ListsComponent {
   $http;
   socket;
-  
+
   newList = '';
   myLists = [];
-  
-  Auth;  
+
+  Auth;
   loggedUser;
-  
+
   /*@ngInject*/
   constructor($http, $scope, socket, Auth) {
     this.$http = $http;
     this.socket = socket;
-    
+
     this.Auth = Auth;
     this.loggedUser = this.Auth.getCurrentUserSync();
 
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
       socket.unsyncUpdates('list');
-    });   
+    });
 
-    console.log(' lists: ' + this.myLists );
-    console.log(' numar: ' + this.myLists.length );
+    //console.log(' lists: ' + this.myLists );
+    //console.log(' numar: ' + this.myLists.length );
   }
 
   $onInit() {
     var vm = this;
-/*
-    this.$http.get('/api/lists/' + this.loggedUser._id + '/lists').then(response => {
-      this.myLists = response.data;
-      this.socket.syncUpdates('list', this.myLists);
-    });
-    */
+    /*
+        this.$http.get('/api/lists/' + this.loggedUser._id + '/lists').then(response => {
+          this.myLists = response.data;
+          this.socket.syncUpdates('list', this.myLists);
+        });
+        */
 
     this.$http.get('/api/userlists/' + this.loggedUser._id + '/items').then(response => {
       var myUserLists = response.data;
@@ -46,27 +46,23 @@ export class ListsComponent {
 
       myUserLists.forEach(element => {
         if (element.idList) {
-          //this.deleteList(element);
-          console.log(' idList: ' + element.idList + ' idUser: ' + element.idUser + ' role: ' + element.role);
-
           this.$http.get('/api/lists/' + element.idList)
-          .catch(error => {
-            console.log('errox ' + error);
-          })
-          .then(response => {
-            if(response) {
-              var list = response.data;
-              this.myLists[index++] = list;
+            .catch(error => {
+            })
+            .then(response => {
+              if (response) {
+                var list = response.data;
+                this.myLists[index++] = list;
 
-              console.log(' list: ' + list._id);
-              //console.log(' lists: ' + this.myLists );
-              console.log(' numar: ' + this.myLists.length );
-            }
-          });
+                //console.log(' list: ' + list._id);
+                //console.log(' lists: ' + this.myLists );
+                //console.log(' numar: ' + this.myLists.length );
+              }
+            });
         }
       });
 
-      this.myLists = response.data;
+      //this.myLists = response.data;
       this.socket.syncUpdates('list', this.myLists);
     });
   }
@@ -82,38 +78,27 @@ export class ListsComponent {
   }
 
   deleteList(list) {
-    console.log(list._id);
-
     this.$http.delete('/api/userlists/' + list._id + '/items').then(response => {
-      console.log(response);
+      console.log('Enter delete from in list');
+      this.$http.delete('/api/lists/' + list._id);
     })
-    .catch(error => {
-      var txt = '';
-      for (var x in error) {
-        console.log('eee: ' + error[x]);
-      } 
-      
-    });
-
-    /*
-    this.$http.delete('/api/userlists/' + list._id + '/items').then(function(response){
-      console.log(response);
-    })
-    .catch(error => {
-      console.log(error);
-    });
-
-    this.$http.delete('/api/lists/' + list._id).then(function(response){
-      console.log(response);
-    })
-    .catch(error => {
-      console.log(error);
-    });
-    */
+      .catch(error => {
+        console.log('Error: ' + error);
+      });
   }
 
-  filterByRole (item, role) {
-    return role === item.role ? true : true;
+  filterByRole(itemList, role) {
+    var filteredItems = [];
+    var i = 0;
+
+    for (let entry of itemList) {
+      console.log(entry.role);
+      if (entry.role === role) {
+        filteredItems[i++] = entry;
+      }
+    }
+
+    return filteredItems;
   }
 }
 
