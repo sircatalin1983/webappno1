@@ -56,20 +56,35 @@ export class ListComponent {
     this.$http.get('/api/userlists/' + this.idList + '/users').then(response => {
       this.myUserLists = response.data;
       this.socket.syncUpdates('userlist', this.myUserLists);
+      
+      console.log('AAAA: ' + this.usersOfSystem.length);
+
+     
 
       var index = 0;
       this.myUserLists.forEach(element => {
+        console.log('element.idUser: ' + element.idUser);
+        /*
+        this.$http.get('/api/user/' + element.idUser).then(response => { 
+          console.log('x: ' + response);
+        });
+        //*/
+/*
         this.usersOfSystem.forEach(userOfSystem => {
           if (element.role === 'owner' && userOfSystem['_id'] === element.idUser) {
+            console.log('xcv1: ' + this.owner);
             this.owner = userOfSystem;
           }
           if (element.role === 'user' && userOfSystem['_id'] === element.idUser) {
+            console.log('xcv2: ' + this.owner);
             this.usersOfList[index++] = userOfSystem;
           }
         });
+        //*/
       });
+
       console.log('owneeeer1: ' + this.owner);
-      console.log('owneeeer2: ' + this.myUserLists);
+      console.log('owneeeerXXD2: ' + this.myUserLists[0].role);
       console.log('owneeeer3: ' + this.usersOfSystem);
     });
 

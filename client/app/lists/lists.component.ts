@@ -9,7 +9,9 @@ export class ListsComponent {
   socket;
 
   newList = '';
+
   myLists = [];
+  myUserLists = [];
 
   Auth;
   loggedUser;
@@ -25,26 +27,16 @@ export class ListsComponent {
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('list');
     });
-
-    //console.log(' lists: ' + this.myLists );
-    //console.log(' numar: ' + this.myLists.length );
   }
 
   $onInit() {
     var vm = this;
-    /*
-        this.$http.get('/api/lists/' + this.loggedUser._id + '/lists').then(response => {
-          this.myLists = response.data;
-          this.socket.syncUpdates('list', this.myLists);
-        });
-        */
-
-    this.$http.get('/api/userlists/' + this.loggedUser._id + '/items').then(response => {
-      var myUserLists = response.data;
+      this.$http.get('/api/userlists/' + this.loggedUser._id + '/items').then(response => {
+      this.myUserLists = response.data;
       var index = 0;
       this.myLists = new Array(0);
 
-      myUserLists.forEach(element => {
+      this.myUserLists.forEach(element => {
         if (element.idList) {
           this.$http.get('/api/lists/' + element.idList)
             .catch(error => {
@@ -53,16 +45,10 @@ export class ListsComponent {
               if (response) {
                 var list = response.data;
                 this.myLists[index++] = list;
-
-                //console.log(' list: ' + list._id);
-                //console.log(' lists: ' + this.myLists );
-                //console.log(' numar: ' + this.myLists.length );
               }
             });
         }
       });
-
-      //this.myLists = response.data;
       this.socket.syncUpdates('list', this.myLists);
     });
   }
@@ -81,30 +67,18 @@ export class ListsComponent {
     this.$http.delete('/api/userlists/' + list._id + '/items').then(response => {
       console.log('Enter delete from in list');
       this.$http.delete('/api/lists/' + list._id);
-    })
-      .catch(error => {
-        console.log('Error: ' + error);
-      });
+    });
   }
 
   filterByRole(itemList, role) {
-    console.log ("itemlist: " + role);
-    console.log ("itemlist: " + itemList.name);
-    console.log ("itemlist: " + itemList._id);
-    return itemList;
-    /*
-    var filteredItems = [];
-    var i = 0;
+    var returnValue = false;
 
-    for (let entry of itemList) {
-      console.log(entry.role);
-      if (entry.role === role) {
-        filteredItems[i++] = entry;
-      }
-    }
+    this.myUserLists.forEach(element => {
+      if (element.role == role && element.idList === itemList._id && element.idUser === this.loggedUser._id)
+        returnValue = true;
+    });
 
-    return filteredItems;
-    */
+    return returnValue;
   }
 }
 
