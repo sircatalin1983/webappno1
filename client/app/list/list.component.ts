@@ -56,16 +56,12 @@ export class ListComponent {
     this.$http.get('/api/userlists/' + this.idList + '/users').then(response => {
       this.myUserLists = response.data;
       this.socket.syncUpdates('userlist', this.myUserLists);
-      
-      console.log('AAAA: ' + this.usersOfSystem.length);
-
-     
 
       var index = 0;
       this.myUserLists.forEach(element => {
-        console.log('element.idUser: ' + element.idUser);
-        /*
-        this.$http.get('/api/user/' + element.idUser).then(response => { 
+//        console.log('element.idUser: ' + element.idUser);
+        
+        this.$http.get('/api/users/' + element.idUser + '/user').then(response => { 
           console.log('x: ' + response);
         });
         //*/
@@ -83,9 +79,9 @@ export class ListComponent {
         //*/
       });
 
-      console.log('owneeeer1: ' + this.owner);
-      console.log('owneeeerXXD2: ' + this.myUserLists[0].role);
-      console.log('owneeeer3: ' + this.usersOfSystem);
+      //console.log('owneeeer1: ' + this.owner);
+      //console.log('owneeeerXXD2: ' + this.myUserLists[0].role);
+      //console.log('owneeeer3: ' + this.usersOfSystem);
     });
 
     this.loadingItems = false;
