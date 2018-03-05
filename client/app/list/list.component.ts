@@ -89,7 +89,7 @@ export class ListComponent {
       this.usersOfSystem.forEach(user => {
         if (this.newMember.toLowerCase() === user['name'].toLowerCase() || this.newMember.toLowerCase() === user['email'].toLowerCase()) {
           newUser = user;
-        }
+        } 
       });
 
       if (newUser) {
@@ -100,6 +100,8 @@ export class ListComponent {
             this.$http.post('/api/userlists', { idUser: newUser._id, idList: this.idList, role: 'user' });
           }
         });
+      } else {
+        alert('User do not exists!');
       }
 
       this.newMember = '';

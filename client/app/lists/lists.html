@@ -27,7 +27,7 @@
   <div class="row">
     <div class="col-lg-12">
       <h1 class="page-header">Shared With Me:</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="list in $ctrl.filterByRole($ctrl.myLists, 'user')">
+      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="list in $ctrl.myLists" ng-show="$ctrl.filterByRole(list, 'owner')">
         <!--      <li ng-show="$ctrl.filterByRole(list, 'owner')">       -->
         <li>
           <a href="/list/{{list._id}}" uib-tooltip="{{list.info}}">{{list.name}}

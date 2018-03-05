@@ -88,6 +88,11 @@ export class ListsComponent {
   }
 
   filterByRole(itemList, role) {
+    console.log ("itemlist: " + role);
+    console.log ("itemlist: " + itemList.name);
+    console.log ("itemlist: " + itemList._id);
+    return itemList;
+    /*
     var filteredItems = [];
     var i = 0;
 
@@ -99,6 +104,7 @@ export class ListsComponent {
     }
 
     return filteredItems;
+    */
   }
 }
 
