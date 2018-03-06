@@ -18,10 +18,6 @@ export class ListComponent {
 
   idList = "";
 
-  usersOfList = [];
-
-  usersOfSystem: Object[];
-
   myUserLists;
 
   newMember;
@@ -30,7 +26,7 @@ export class ListComponent {
 
   ownerView = false;
   /*@ngInject*/
-  constructor($http, $scope, socket, $state, User, Auth) {
+  constructor($http, $scope, socket, $state, Auth) {
     this.$http = $http;
     this.socket = socket;
 
@@ -41,8 +37,6 @@ export class ListComponent {
       socket.unsyncUpdates('item');
       socket.unsyncUpdates('userlist');
     });
-
-    this.usersOfSystem = User.query();
   }
 
   $onInit() {
@@ -61,71 +55,18 @@ export class ListComponent {
       this.myUserLists = response.data;
       this.socket.syncUpdates('userlist', this.myUserLists);
 
-      //set the owner view to allow only owner to add/remove members
       this.myUserLists.forEach(element => {
         if (element.role === 'owner' && this.loggedUser._id === element.idUser) {
           this.ownerView = true;
         }
-      });
 
-      this.myUserLists.forEach(element => {
-        /*merge
-        if (element.role === 'owner' && this.loggedUser._id === element.idUser) {
-          element.name = this.loggedUser.name;
-        }
-        //*/
-        this.$http.get('/api/users/' + element.idUser + '/user').then(user => {
-          element.name = user;
-          
+        this.$http.get('/api/users/' + element.idUser).then(userdata => {
+          var user = userdata.data;
+          element.name = user.name;
+          element.role = user.role;
         });
-        console.log(element._id + ' name: ' + element.name);
       });
 
-
-      //        console.log('element.idUser: ' + element.idUser);
-      /*
-      this.$http.get('/api/users/' + element.idUser + '/user').then(response => { 
-        console.log('x: ' + response);
-      });
-      //*/
-      /*
-              this.usersOfSystem.forEach(userOfSystem => {
-                if (element.role === 'owner' && userOfSystem['_id'] === element.idUser) {
-                  console.log('xcv1: ' + this.owner);
-                  this.owner = userOfSystem;
-                }
-                if (element.role === 'user' && userOfSystem['_id'] === element.idUser) {
-                  console.log('xcv2: ' + this.owner);
-                  this.usersOfList[index++] = userOfSystem;
-                }
-              });
-              //*/
-
-
-
-
-      var index = 0;
-      this.myUserLists.forEach(element => {
-        //        console.log('element.idUser: ' + element.idUser);
-
-               //*/
-        /*
-                this.usersOfSystem.forEach(userOfSystem => {
-                  if (element.role === 'owner' && userOfSystem['_id'] === element.idUser) {
-                    console.log('xcv1: ' + this.owner);
-                    this.owner = userOfSystem;
-                  }
-                  if (element.role === 'user' && userOfSystem['_id'] === element.idUser) {
-                    console.log('xcv2: ' + this.owner);
-                    this.usersOfList[index++] = userOfSystem;
-                  }
-                });
-                //*/
-      });
-
-      //console.log('owneeeer1: ' + this.owner);
-      //console.log('owneeeerXXD2: ' + this.myUserLists[0].role);
-      //console.log('owneeeer3: ' + this.usersOfSystem);
     });
 
     this.loadingItems = false;
@@ -141,12 +82,36 @@ export class ListComponent {
   addMember() {
     var newUser;
     if (this.newMember) {
+
+
+      this.$http.get('/api/users/' + this.newMember + '/userbyname').then(userdata => {
+        var user = userdata.data;
+        //console.log('user: ' + user.name);
+
+        for (var x in user) {
+          console.log('user1: ' + x);
+        }
+
+      });
+
+      this.$http.get('/api/users/' + this.newMember + '/userbyemail').then(userdata => {
+        var user = userdata.data;
+        //console.log('user: ' + user.name);
+
+        for (var x in user) {
+          console.log('user2: ' + x);
+        }
+      });
+
+
+/*
       this.usersOfSystem.forEach(user => {
         if (this.newMember.toLowerCase() === user['name'].toLowerCase() || this.newMember.toLowerCase() === user['email'].toLowerCase()) {
           newUser = user;
         }
       });
-
+*/
+/*
       if (newUser) {
         this.myUserLists.forEach(userList => {
           if (userList.idUser == newUser._id) {
@@ -158,7 +123,7 @@ export class ListComponent {
       } else {
         alert('User do not exists!');
       }
-
+*/
       this.newMember = '';
     }
   }
