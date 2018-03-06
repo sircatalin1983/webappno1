@@ -31,8 +31,9 @@ export class ListsComponent {
 
   $onInit() {
     var vm = this;
-      this.$http.get('/api/userlists/' + this.loggedUser._id + '/items').then(response => {
+    this.$http.get('/api/userlists/' + this.loggedUser._id + '/items').then(response => {
       this.myUserLists = response.data;
+
       var index = 0;
       this.myLists = new Array(0);
 

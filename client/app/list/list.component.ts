@@ -18,7 +18,6 @@ export class ListComponent {
 
   idList = "";
 
-  owner;
   usersOfList = [];
 
   usersOfSystem: Object[];
@@ -26,11 +25,16 @@ export class ListComponent {
   myUserLists;
 
   newMember;
+
+  loggedUser;
+
+  ownerView = false;
   /*@ngInject*/
-  constructor($http, $scope, socket, $state, User) {
+  constructor($http, $scope, socket, $state, User, Auth) {
     this.$http = $http;
     this.socket = socket;
 
+    this.loggedUser = Auth.getCurrentUserSync();
     this.idList = $state.params['idList'];
 
     $scope.$on('$destroy', function () {
@@ -57,26 +61,66 @@ export class ListComponent {
       this.myUserLists = response.data;
       this.socket.syncUpdates('userlist', this.myUserLists);
 
+      //set the owner view to allow only owner to add/remove members
+      this.myUserLists.forEach(element => {
+        if (element.role === 'owner' && this.loggedUser._id === element.idUser) {
+          this.ownerView = true;
+        }
+      });
+
+      this.myUserLists.forEach(element => {
+        /*merge
+        if (element.role === 'owner' && this.loggedUser._id === element.idUser) {
+          element.name = this.loggedUser.name;
+        }
+        //*/
+        this.$http.get('/api/users/' + element.idUser + '/user').then(user => {
+          element.name = user;
+          
+        });
+        console.log(element._id + ' name: ' + element.name);
+      });
+
+
+      //        console.log('element.idUser: ' + element.idUser);
+      /*
+      this.$http.get('/api/users/' + element.idUser + '/user').then(response => { 
+        console.log('x: ' + response);
+      });
+      //*/
+      /*
+              this.usersOfSystem.forEach(userOfSystem => {
+                if (element.role === 'owner' && userOfSystem['_id'] === element.idUser) {
+                  console.log('xcv1: ' + this.owner);
+                  this.owner = userOfSystem;
+                }
+                if (element.role === 'user' && userOfSystem['_id'] === element.idUser) {
+                  console.log('xcv2: ' + this.owner);
+                  this.usersOfList[index++] = userOfSystem;
+                }
+              });
+              //*/
+
+
+
+
       var index = 0;
       this.myUserLists.forEach(element => {
-//        console.log('element.idUser: ' + element.idUser);
-        
-        this.$http.get('/api/users/' + element.idUser + '/user').then(response => { 
-          console.log('x: ' + response);
-        });
-        //*/
-/*
-        this.usersOfSystem.forEach(userOfSystem => {
-          if (element.role === 'owner' && userOfSystem['_id'] === element.idUser) {
-            console.log('xcv1: ' + this.owner);
-            this.owner = userOfSystem;
-          }
-          if (element.role === 'user' && userOfSystem['_id'] === element.idUser) {
-            console.log('xcv2: ' + this.owner);
-            this.usersOfList[index++] = userOfSystem;
-          }
-        });
-        //*/
+        //        console.log('element.idUser: ' + element.idUser);
+
+               //*/
+        /*
+                this.usersOfSystem.forEach(userOfSystem => {
+                  if (element.role === 'owner' && userOfSystem['_id'] === element.idUser) {
+                    console.log('xcv1: ' + this.owner);
+                    this.owner = userOfSystem;
+                  }
+                  if (element.role === 'user' && userOfSystem['_id'] === element.idUser) {
+                    console.log('xcv2: ' + this.owner);
+                    this.usersOfList[index++] = userOfSystem;
+                  }
+                });
+                //*/
       });
 
       //console.log('owneeeer1: ' + this.owner);
@@ -100,7 +144,7 @@ export class ListComponent {
       this.usersOfSystem.forEach(user => {
         if (this.newMember.toLowerCase() === user['name'].toLowerCase() || this.newMember.toLowerCase() === user['email'].toLowerCase()) {
           newUser = user;
-        } 
+        }
       });
 
       if (newUser) {

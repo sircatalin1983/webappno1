@@ -3,30 +3,37 @@
 </header>
 
 <div class="container">
-    <div class="row">
+    <div class="row" ng-show="$ctrl.ownerView">
         <h1 class="page-header">Members:</h1>
         <form class="list-form">
             <p class="input-group">
                 <input type="text" class="form-control" placeholder="Add a new member here." ng-model="$ctrl.newMember">
                 <span class="input-group-btn">
-                    <button type="submit" class="btn btn-primary" ng-click="$ctrl.addMember()" >Add Member</button>
+                    <button type="submit" class="btn btn-primary" ng-click="$ctrl.addMember()">Add Member</button>
                 </span>
             </p>
         </form>
+
+        <ul class="nav nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="user in $ctrl.myUserLists">
+            <li>
+                <div class="chip">
+                    <img src="assets/images/contact.png" alt="Person" width="96" height="96">{{user.name}}
+                </div>
+            </li>
+        </ul>
+
+        <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="user in $ctrl.myUserLists">
+            <li>
+                <div class="chip">
+                    <img src="assets/images/img_avatar.png" alt="Person" width="96" height="96"> John Doe
+                    <span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
+                </div>
+                {{x.idList}}___{{x.role}}___{{x.idUser}}___{{x.name}}
+                <br/>
+            </li>
+        </ul>
     </div>
-    
-    <div class="chip">
-        <img src="assets/images/contact.png" alt="Person" width="96" height="96">{{$owner}}
-    </div>
-    <div class="chip">
-        <img src="assets/images/img_avatar.png" alt="Person" width="96" height="96"> John Doe
-        <span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
-    </div>
-    <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="x in $ctrl.myUserLists">
-        <li>
-                {{x.idList}}___{{x.role}}___{{x.idUser}}
-        </li>
-    </ul>
+
     <div class="row">
         <h1 class="page-header">My List:</h1>
         <section class="myapp" style="min-height: 300px">
