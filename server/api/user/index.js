@@ -12,7 +12,7 @@ router.get('/me', auth.isAuthenticated(), controller.me);
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.get('/:name/userbyname', auth.isAuthenticated(), controller.getUserByName);
-router.get('/:email/userbyemail', auth.isAuthenticated(), controller.getUserByName);
+router.get('/:email/userbyemail', auth.isAuthenticated(), controller.getUserByEmail);
 router.post('/', controller.create);
 
 module.exports = router;

@@ -83,24 +83,40 @@ export class ListComponent {
     var newUser;
     if (this.newMember) {
 
-
+      console.log('start');
+/*
       this.$http.get('/api/users/' + this.newMember + '/userbyname').then(userdata => {
         var user = userdata.data;
-        //console.log('user: ' + user.name);
+        //console.log('user1: ' + user.name);
 
         for (var x in user) {
-          console.log('user1: ' + x);
+          //console.log('user1: ' + x);
         }
 
       });
+*/
+
+this.$http.get('/api/users/' + this.loggedUser._id).then(userdata => {
+  var user = userdata.data;
+  console.log('fdas ' + user.name);
+});
+
 
       this.$http.get('/api/users/' + this.newMember + '/userbyemail').then(userdata => {
         var user = userdata.data;
-        //console.log('user: ' + user.name);
-
-        for (var x in user) {
-          console.log('user2: ' + x);
+        console.log('user2: ' + user);
+        for (var x in userdata.data) {
+          console.log('userdata: ' + x);
+          console.log('userdata: ' + userdata.data[x]);
         }
+/*
+        console.log('userdatx: ' + userdata.data);
+        console.log('userdatx: ' + userdata.status);
+        console.log('userdatx: ' + userdata.headers);
+        console.log('userdatx: ' + userdata.config);
+        console.log('userdatx: ' + userdata.statusText);
+        console.log('userdatx: ' + userdata.xhrStatus);
+//*/
       });
 
 

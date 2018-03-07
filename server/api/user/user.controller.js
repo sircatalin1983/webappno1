@@ -82,10 +82,10 @@ export function getUserByName(req, res, next) {
 export function getUserByEmail(req, res, next) {
   var userEmail = req.params.email;
 
-  return User.find({ email: userEmail }, '-salt -password').exec()
+  return User.find({ email: userEmail }).exec()
   .then(user => {
     if(!user) {
-      return res.status(401).end();
+      return res.status(404).end();
     }
     res.json(user);
   })
