@@ -141,8 +141,13 @@ export function showUsers(req, res) {
 
 // Deletes a Userlist from the DB by idList
 export function destroyList(req, res) {
-  return UserList.find({ idList: req.params.idList }).exec()
+  return UserList.deleteMany({ idList: req.params.idList }).exec()
     .then(handleEntityNotFound(res))
-    .then(removeEntity(res))
+    .catch(handleError(res));
+}
+
+export function deleteUserListByIdUser(req, res) {
+  return UserList.deleteMany({ idUser: req.params.idUser }).exec()
+    .then(handleEntityNotFound(res))
     .catch(handleError(res));
 }

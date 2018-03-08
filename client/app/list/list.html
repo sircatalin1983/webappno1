@@ -17,8 +17,8 @@
         <ul class="nav nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="user in $ctrl.myUserLists">
             <li>
                 <div class="chip">
-                    <img src="assets/images/img_avatar.png" alt="Person" width="96" height="96">{{user.name}}___{{user.role}}
-                    <span class="closebtn" onclick="this.parentElement.style.display='none'" ng-show="user.role=='user'">&times;</span>
+                    <img src="assets/images/img_avatar.png" alt="Person" width="96" height="96">{{user.name}}
+                    <span class="closebtn" onclick="this.parentElement.style.display='none'" ng-click="$ctrl.deleteMember(user)" ng-show="user.role=='user'">&times;</span>
                 </div>
             </li>
         </ul>        

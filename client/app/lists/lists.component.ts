@@ -50,6 +50,7 @@ export class ListsComponent {
             });
         }
       });
+      
       this.socket.syncUpdates('list', this.myLists);
     });
   }
@@ -73,8 +74,7 @@ export class ListsComponent {
 
   deleteList(list) {
     this.$http.delete('/api/userlists/' + list._id + '/items').then(response => {
-      console.log('Enter delete from in list');
-      this.$http.delete('/api/lists/' + list._id);
+      this.$http.delete('/api/lists/' + list.idList);
     });
   }
 

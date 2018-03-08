@@ -62,7 +62,6 @@ export class ListComponent {
         this.$http.get('/api/users/' + element.idUser).then(userdata => {
           var user = userdata.data;
           element.name = user.name;
-          element.role = user.role;
         });
       });
 
@@ -98,16 +97,13 @@ export class ListComponent {
           if (alreadyInList) {
             alert('User already in the list!');
           } else {
-            this.$http.post('/api/userlists', { idUser: newUser._id, idList: this.idList, role: 'user' });
-            /*
-            var newElement = new Object;
-            newElement['idUser'] = newUser._id;
-            newElement['idList'] = this.idList;
-            newElement['role'] = 'user';
-            newElement['name'] = newUser.name;
-            
-            this.myUserLists[this.myUserLists.length] = newElement;
-            //*/
+            this.$http.post('/api/userlists', { idUser: newUser._id, idList: this.idList, role: 'user' }).then(aaa => {
+              this.myUserLists.forEach(element => {
+                if (element.idUser === newUser._id) {
+                  element.name = newUser.name;
+                }
+              });
+            });
           }
         } else {
           alert('User doesn\'t exists!');
@@ -116,6 +112,10 @@ export class ListComponent {
     }
    
     this.newMember = '';
+  }
+
+  deleteMember(userList){
+    this.$http.delete('/api/userlists/' + userList.idUser);
   }
 
   editItem(item) {
