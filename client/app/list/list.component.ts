@@ -86,63 +86,63 @@ export class ListComponent {
     if (this.newMember) {
 
       console.log('start');
-/*
-      this.$http.get('/api/users/' + this.newMember + '/userbyname').then(userdata => {
+      /*
+            this.$http.get('/api/users/' + this.newMember + '/userbyname').then(userdata => {
+              var user = userdata.data;
+              //console.log('user1: ' + user.name);
+      
+              for (var x in user) {
+                //console.log('user1: ' + x);
+              }
+      
+            });
+      */
+
+      this.$http.get('/api/users/' + this.loggedUser._id).then(userdata => {
         var user = userdata.data;
-        //console.log('user1: ' + user.name);
-
-        for (var x in user) {
-          //console.log('user1: ' + x);
-        }
-
+        console.log('fdas ' + user.name);
       });
-*/
-
-this.$http.get('/api/users/' + this.loggedUser._id).then(userdata => {
-  var user = userdata.data;
-  console.log('fdas ' + user.name);
-});
 
 
-      this.$http.get('/api/users/' + this.newMember + '/userbyemail').then(userdata => {
+      this.$http.get('/api/users/' + this.newMember + '/userbykeyword').then(userdata => {
         var user = userdata.data;
         console.log('user2: ' + user);
         for (var x in userdata.data) {
           console.log('userdata: ' + x);
           console.log('userdata: ' + userdata.data[x]);
         }
-/*
-        console.log('userdatx: ' + userdata.data);
-        console.log('userdatx: ' + userdata.status);
-        console.log('userdatx: ' + userdata.headers);
-        console.log('userdatx: ' + userdata.config);
-        console.log('userdatx: ' + userdata.statusText);
-        console.log('userdatx: ' + userdata.xhrStatus);
-//*/
+        /*
+                console.log('userdatx: ' + userdata.data);
+                console.log('userdatx: ' + userdata.status);
+                console.log('userdatx: ' + userdata.headers);
+                console.log('userdatx: ' + userdata.config);
+                console.log('userdatx: ' + userdata.statusText);
+                console.log('userdatx: ' + userdata.xhrStatus);
+        //*/
       });
     }
 
-/*
-      this.usersOfSystem.forEach(user => {
-        if (this.newMember.toLowerCase() === user['name'].toLowerCase() || this.newMember.toLowerCase() === user['email'].toLowerCase()) {
-          newUser = user;
-        }
-      });
-*/
-/*
-      if (newUser) {
-        this.myUserLists.forEach(userList => {
-          if (userList.idUser == newUser._id) {
-            alert('User already in the list!');
+    /*
+          this.usersOfSystem.forEach(user => {
+            if (this.newMember.toLowerCase() === user['name'].toLowerCase() || this.newMember.toLowerCase() === user['email'].toLowerCase()) {
+              newUser = user;
+            }
+          });
+    */
+    /*
+          if (newUser) {
+            this.myUserLists.forEach(userList => {
+              if (userList.idUser == newUser._id) {
+                alert('User already in the list!');
+              } else {
+                this.$http.post('/api/userlists', { idUser: newUser._id, idList: this.idList, role: 'user' });
+              }
+            });
           } else {
-            this.$http.post('/api/userlists', { idUser: newUser._id, idList: this.idList, role: 'user' });
+            alert('User do not exists!');
           }
-        });
-      } else {
-        alert('User do not exists!');
-      }
-*/
-      this.newMember = '';
+    */
+    this.newMember = '';
   }
 
   editItem(item) {

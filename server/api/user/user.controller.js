@@ -63,31 +63,13 @@ export function show(req, res, next) {
     .catch(err => next(err));
 }
 
-/**
- * Get a single user
- */
-export function getUserByName(req, res, next) {
-  var userName = req.params.name;
-
-  return User.find({ name: userName }, '-salt -password').exec()
-  .then(user => {
-    if(!user) {
-      return res.status(401).end();
-    }
-    res.json(user);
-  })
-  .catch(err => next(err));
-}
-
-export function getUserByEmail(req, res, next) {
-  var userEmail = req.params.email;
-
-  return User.find({ email: userEmail }).exec()
+export function getUserByKeyword(req, res, next) {
+  return User.findOne({$or:[{name: req.params.keyword}, {email:req.params.keyword}]}, '-salt -password').exec()
   .then(user => {
     if(!user) {
       return res.status(404).end();
     }
-    res.json(user.profile);
+    res.json(user);
   })
   .catch(err => next(err));
 }
