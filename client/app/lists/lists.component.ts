@@ -59,6 +59,13 @@ export class ListsComponent {
       this.$http.post('/api/lists', { name: this.newList, info: "" }).then(response => {
         var list = response.data;
         this.$http.post('/api/userlists', { idUser: this.loggedUser._id, idList: list._id, role: 'owner' });
+
+        var newUserList = new Object;
+        newUserList['idUser'] = this.loggedUser._id;
+        newUserList['idList'] = list._id;
+        newUserList['role'] = 'owner';
+        
+        this.myUserLists[this.myUserLists.length] = newUserList;        
       });
       this.newList = '';
     }

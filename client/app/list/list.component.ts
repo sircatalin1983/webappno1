@@ -53,7 +53,6 @@ export class ListComponent {
 
     this.$http.get('/api/userlists/' + this.idList + '/users').then(response => {
       this.myUserLists = response.data;
-      this.socket.syncUpdates('userlist', this.myUserLists);
 
       this.myUserLists.forEach(element => {
         if (element.role === 'owner' && this.loggedUser._id === element.idUser) {
@@ -67,6 +66,7 @@ export class ListComponent {
         });
       });
 
+      this.socket.syncUpdates('userlist', this.myUserLists);
     });
 
     this.loadingItems = false;
@@ -80,68 +80,41 @@ export class ListComponent {
   }
 
   addMember() {
-    console.log('start')
-
     var newUser;
+    var alreadyInList = false;
+
     if (this.newMember) {
-
-      console.log('start');
-      /*
-            this.$http.get('/api/users/' + this.newMember + '/userbyname').then(userdata => {
-              var user = userdata.data;
-              //console.log('user1: ' + user.name);
-      
-              for (var x in user) {
-                //console.log('user1: ' + x);
-              }
-      
-            });
-      */
-
-      this.$http.get('/api/users/' + this.loggedUser._id).then(userdata => {
-        var user = userdata.data;
-        console.log('fdas ' + user.name);
-      });
-
-
       this.$http.get('/api/users/' + this.newMember + '/userbykeyword').then(userdata => {
         var user = userdata.data;
-        console.log('user2: ' + user);
-        for (var x in userdata.data) {
-          console.log('userdata: ' + x);
-          console.log('userdata: ' + userdata.data[x]);
-        }
-        /*
-                console.log('userdatx: ' + userdata.data);
-                console.log('userdatx: ' + userdata.status);
-                console.log('userdatx: ' + userdata.headers);
-                console.log('userdatx: ' + userdata.config);
-                console.log('userdatx: ' + userdata.statusText);
-                console.log('userdatx: ' + userdata.xhrStatus);
-        //*/
+        if (user) {
+          newUser = user;        
+
+          this.myUserLists.forEach(userList => {
+            if (userList.idUser == newUser._id) {
+              alreadyInList = true;
+            }
+          });  
+          
+          if (alreadyInList) {
+            alert('User already in the list!');
+          } else {
+            this.$http.post('/api/userlists', { idUser: newUser._id, idList: this.idList, role: 'user' });
+            /*
+            var newElement = new Object;
+            newElement['idUser'] = newUser._id;
+            newElement['idList'] = this.idList;
+            newElement['role'] = 'user';
+            newElement['name'] = newUser.name;
+            
+            this.myUserLists[this.myUserLists.length] = newElement;
+            //*/
+          }
+        } else {
+          alert('User doesn\'t exists!');
+        }          
       });
     }
-
-    /*
-          this.usersOfSystem.forEach(user => {
-            if (this.newMember.toLowerCase() === user['name'].toLowerCase() || this.newMember.toLowerCase() === user['email'].toLowerCase()) {
-              newUser = user;
-            }
-          });
-    */
-    /*
-          if (newUser) {
-            this.myUserLists.forEach(userList => {
-              if (userList.idUser == newUser._id) {
-                alert('User already in the list!');
-              } else {
-                this.$http.post('/api/userlists', { idUser: newUser._id, idList: this.idList, role: 'user' });
-              }
-            });
-          } else {
-            alert('User do not exists!');
-          }
-    */
+   
     this.newMember = '';
   }
 
@@ -173,6 +146,11 @@ export class ListComponent {
 
   setStatusFilter(newStatus) {
     this.statusFilter = newStatus === 'all' || newStatus === 'completed' || newStatus === 'active' ? newStatus : 'all';
+  }
+
+  filterByRole (item, role) {
+    if (item.role === role ) return true;
+    return false;
   }
 
   filterByStatus(items) {

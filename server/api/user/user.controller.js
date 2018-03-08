@@ -67,7 +67,7 @@ export function getUserByKeyword(req, res, next) {
   return User.findOne({$or:[{name: req.params.keyword}, {email:req.params.keyword}]}, '-salt -password').exec()
   .then(user => {
     if(!user) {
-      return res.status(404).end();
+      return res.json(null).end();
     }
     res.json(user);
   })

@@ -17,21 +17,11 @@
         <ul class="nav nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="user in $ctrl.myUserLists">
             <li>
                 <div class="chip">
-                    <img src="assets/images/contact.png" alt="Person" width="96" height="96">{{user.name}}
+                    <img src="assets/images/img_avatar.png" alt="Person" width="96" height="96">{{user.name}}___{{user.role}}
+                    <span class="closebtn" onclick="this.parentElement.style.display='none'" ng-show="user.role=='user'">&times;</span>
                 </div>
             </li>
-        </ul>
-
-        <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="user in $ctrl.myUserLists">
-            <li>
-                <div class="chip">
-                    <img src="assets/images/img_avatar.png" alt="Person" width="96" height="96"> John Doe
-                    <span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
-                </div>
-                {{x.idList}}___{{x.role}}___{{x.idUser}}___{{x.name}}
-                <br/>
-            </li>
-        </ul>
+        </ul>        
     </div>
 
     <div class="row">
