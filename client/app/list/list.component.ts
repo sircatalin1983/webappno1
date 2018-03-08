@@ -80,28 +80,13 @@ export class ListComponent {
   }
 
   addMember() {
+    console.log('start')
+
     var newUser;
     if (this.newMember) {
 
 
-      this.$http.get('/api/users/' + this.newMember + '/userbyname').then(userdata => {
-        var user = userdata.data;
-        //console.log('user: ' + user.name);
-
-        for (var x in user) {
-          console.log('user1: ' + x);
-        }
-
-      });
-
-      this.$http.get('/api/users/' + this.newMember + '/userbyemail').then(userdata => {
-        var user = userdata.data;
-        //console.log('user: ' + user.name);
-
-        for (var x in user) {
-          console.log('user2: ' + x);
-        }
-      });
+      };
 
 
 /*
@@ -125,7 +110,6 @@ export class ListComponent {
       }
 */
       this.newMember = '';
-    }
   }
 
   editItem(item) {
