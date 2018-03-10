@@ -5,6 +5,8 @@ import routes from './list.routes';
 
 export class ListComponent {
   $http;
+  $document;
+
   socket;
 
   loadingItems = true;
@@ -26,9 +28,11 @@ export class ListComponent {
 
   ownerView = false;
   /*@ngInject*/
-  constructor($http, $scope, socket, $state, Auth) {
+  constructor($http, $scope, socket, $state, Auth, $document) {
     this.$http = $http;
     this.socket = socket;
+
+    this.$document = $document;
 
     this.loggedUser = Auth.getCurrentUserSync();
     this.idList = $state.params['idList'];
@@ -93,11 +97,11 @@ export class ListComponent {
               alreadyInList = true;
             }
           });  
-          
+
           if (alreadyInList) {
             alert('User already in the list!');
           } else {
-            this.$http.post('/api/userlists', { idUser: newUser._id, idList: this.idList, role: 'user' }).then(aaa => {
+            this.$http.post('/api/userlists', { idUser: newUser._id, idList: this.idList, role: 'user' }).then(userlist => {
               this.myUserLists.forEach(element => {
                 if (element.idUser === newUser._id) {
                   element.name = newUser.name;
@@ -115,6 +119,16 @@ export class ListComponent {
   }
 
   deleteMember(userList){
+    var newArray = [];
+    var index = 0;
+
+    this.myUserLists.forEach(element => {
+      if (element.idUser != userList.idUser) {
+        newArray[index++] = element;
+      }
+    });
+    this.myUserLists = newArray;
+
     this.$http.delete('/api/userlists/' + userList.idUser);
   }
 

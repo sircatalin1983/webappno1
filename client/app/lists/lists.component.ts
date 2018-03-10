@@ -73,9 +73,16 @@ export class ListsComponent {
   }
 
   deleteList(list) {
-    this.$http.delete('/api/lists/' + list.idList).then(response => {
-console.log('d: ' + response);
+    var newArray = [];
+    var index = 0;
+
+    this.myUserLists.forEach(element => {
+      if (element.idList != list._id) {
+        newArray[index++] = element;
+      }
     });
+    this.myUserLists = newArray;
+
     this.$http.delete('/api/userlists/' + list._id + '/items').then(response => {
       this.$http.delete('/api/lists/' + list.idList);
       //delete items from the lists
