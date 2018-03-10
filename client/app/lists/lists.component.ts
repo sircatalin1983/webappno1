@@ -73,8 +73,12 @@ export class ListsComponent {
   }
 
   deleteList(list) {
+    this.$http.delete('/api/lists/' + list.idList).then(response => {
+console.log('d: ' + response);
+    });
     this.$http.delete('/api/userlists/' + list._id + '/items').then(response => {
       this.$http.delete('/api/lists/' + list.idList);
+      //delete items from the lists
     });
   }
 
