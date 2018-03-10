@@ -92,6 +92,10 @@ console.log('d: ' + response);
 
     return returnValue;
   }
+
+  openLink (link) {
+    alert(link);
+  }
 }
 
 export default angular.module('webappno1App.lists', [uiRouter])
