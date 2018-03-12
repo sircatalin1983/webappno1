@@ -21,11 +21,17 @@
                     <span class="closebtn" onclick="this.parentElement.style.display='none'" ng-click="$ctrl.deleteMember(user)" ng-show="user.role=='user'">&times;</span>
                 </div>
             </li>
-        </ul>        
+        </ul>
     </div>
 
     <div class="row">
-        <h1 class="page-header">My List:</h1>
+        <h1 class="page-header">My List (
+            <span>
+                    {{$ctrl.myItems.length}}
+                <ng-pluralize count="$ctrl.myItems.length" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
+            </span>
+        ):
+        </h1>
         <section class="myapp" style="min-height: 300px">
 
             <form class="list-form" ng-submit="$ctrl.addItem()">
@@ -63,15 +69,7 @@
                     </ul>
                     <br/>
                     <br/>
-                    <br/>
-                    <br/>
                     <ul class="filters">
-                        <li>
-                            <span>
-                                <strong>{{$ctrl.myItems.length}}</strong>
-                                <ng-pluralize count="$ctrl.myItems.length" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
-                            </span>
-                        </li>
                         <li>
                             <a ng-click="$ctrl.clearCompleted()">Clear completed</a>
                         </li>
