@@ -348,7 +348,6 @@ gulp.task('watch', () => {
         .pipe(lintServerTestScripts());
 });
 
-/*
 gulp.task('serve', cb => {
     runSequence(
         [
@@ -365,24 +364,6 @@ gulp.task('serve', cb => {
         cb
     );
 });
-//*/
-
-gulp.task('serve', cb => {
-    runSequence(
-        [
-            'clean:tmp',
-            'lint:scripts',
-            'inject',
-            'copy:fonts:dev',
-            'env:all',
-            'typings'
-        ],
-        // 'webpack:dev',
-        ['start:server', 'start:client'],
-        cb
-    );
-});
-//*/
 
 gulp.task('serve:debug', cb => {
     runSequence(
