@@ -9,4 +9,4 @@ COPY . /usr/src/app
 
 EXPOSE 10000
 
-CMD [ "npm", "start" ]
+CMD [ "gulp", "serve" ]
