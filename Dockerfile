@@ -1,12 +1,23 @@
-FROM node:9.3.0
+FROM node:latest
+
+MAINTAINER Jeremymarshall
+
+LABEL "version"="4.2.2"
+
+RUN npm  install -g node-gyp
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-COPY package.json /usr/src/app/
-RUN npm install --production
-COPY . /usr/src/app
+ENV NODE_PATH=/usr/local/lib/node_modules/:/usr/local/lib  NODE_ENV=production
 
-EXPOSE 10000
+COPY *.json /usr/src/app/
+RUN npm install 
 
-CMD [ "gulp", "serve" ]
+ONBUILD COPY package.json /usr/src/app/
+ONBUILD RUN npm install 
+ONBUILD COPY . /usr/src/app
+
+CMD [ "npm", "start" ]
+
+EXPOSE 8080
