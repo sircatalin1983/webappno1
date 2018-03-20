@@ -470,6 +470,7 @@ gulp.task('test:client', done => {
     }).start();
 });
 
+//add cmc
 gulp.task('build-image', function() {
   // fetch command line arguments
   console.log('imageId: '+ arg['imageId'])
@@ -491,6 +492,7 @@ gulp.task('build-image', function() {
   console.log('STOP')
 });
 
+//add cmc
 gulp.task('deploy-image', function() {
   console.log('targetEnv: '+ arg['targetEnv'])
   console.log('imageId: '+ arg['imageId'])
@@ -523,7 +525,7 @@ gulp.task('build', cb => {
         cb);
 });
 
-
+//add cmc
 gulp.task('servex', cb => {
     runSequence(
         [
@@ -534,6 +536,12 @@ gulp.task('servex', cb => {
             'env:all',
             'typings'
         ]
+    );
+});
+
+gulp.task('servey', cb => {
+    runSequence(
+        ['start:server']
     );
 });
 
