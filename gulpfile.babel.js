@@ -523,6 +523,20 @@ gulp.task('build', cb => {
         cb);
 });
 
+
+gulp.task('servex', cb => {
+    runSequence(
+        [
+            'clean:tmp',
+            'lint:scripts',
+            'inject',
+            'copy:fonts:dev',
+            'env:all',
+            'typings'
+        ]
+    );
+});
+
 gulp.task('clean:dist', () => del([`${paths.dist}/!(.git*|.openshift|Procfile)**`], {dot: true}));
 
 gulp.task('build:images', () => {
