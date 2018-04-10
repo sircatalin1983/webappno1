@@ -186,11 +186,13 @@ gulp.task('env:all', () => {
         vars: localConfig
     });
 });
+
 gulp.task('env:test', () => {
     plugins.env({
         vars: {NODE_ENV: 'test'}
     });
 });
+
 gulp.task('env:prod', () => {
     plugins.env({
         vars: {NODE_ENV: 'production'}
@@ -536,12 +538,6 @@ gulp.task('servex', cb => {
             'env:all',
             'typings'
         ]
-    );
-});
-
-gulp.task('servey', cb => {
-    runSequence(
-        ['start:server']
     );
 });
 

@@ -1,0 +1,17 @@
+version: '2'
+services:
+  app:
+    image: webappno1
+    environment:
+      NODE_ENV: production
+      MONGODB_URI: mongodb://mongo/webappno1
+    ports:
+      - 10000:8080
+  mongo:
+    image: mongo:3.4.2
+    volumes:
+      - mongo-data:/data/db
+      - mongo-config:/data/configdb
+volumes:
+  mongo-data:
+  mongo-config:
