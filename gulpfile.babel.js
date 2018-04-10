@@ -517,6 +517,7 @@ gulp.task('build', cb => {
             'typings'
         ],
         [
+            'copy:docker',
             'copy:extras',
             'copy:assets',
             'copy:fonts:dist',
@@ -614,6 +615,15 @@ gulp.task('copy:assets', () => {
 gulp.task('copy:server', () => {
     return gulp.src([
         'package.json'
+    ], {cwdbase: true})
+        .pipe(gulp.dest(paths.dist));
+});
+
+'cmc'
+gulp.task('copy:docker', () => {
+    return gulp.src([
+        'Dockerfile',
+        'docker-compose.yml'
     ], {cwdbase: true})
         .pipe(gulp.dest(paths.dist));
 });
