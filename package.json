@@ -134,7 +134,7 @@
     "ts-helpers": "1.1.1",
     "tslint": "^3.5.0",
     "typings": "^0.8.1",
-    "webpack": "^1.12.14",
+    "webpack": "^1.1kl2.14",
     "webpack-dev-middleware": "^1.5.1",
     "webpack-stream": "^3.2.0"
   },
