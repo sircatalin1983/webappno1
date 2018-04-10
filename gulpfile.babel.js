@@ -473,7 +473,7 @@ gulp.task('test:client', done => {
 });
 
 //add cmc
-gulp.task('build-image', function() {
+gulp.task('build-imagex', function() {
   // fetch command line arguments
   console.log('imageId: '+ arg['imageId'])
 
@@ -493,6 +493,28 @@ gulp.task('build-image', function() {
 
   console.log('STOP')
 });
+
+gulp.task('build-image', function() {
+    // fetch command line arguments
+    console.log('imageId: '+ arg['imageId'])
+  
+    console.log('START')
+    var shell = require("shelljs");
+    console.log('BUILDING IMAGE');
+    if (!arg['imageId']) {
+      console.log('must supply an imageId to build');
+    }
+    var rc = shell.exec('docker-compose up -d').code;
+  
+    console.log('rc:' + rc)
+  
+    if (rc > 0){
+       console.log('DOCKER FAILURE')
+    }
+  
+    console.log('STOP')
+  });
+  
 
 //add cmc
 gulp.task('deploy-image', function() {
