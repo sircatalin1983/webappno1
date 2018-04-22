@@ -495,7 +495,14 @@ gulp.task('build-image', function () {
     console.log('STOP')
 });
 
-gulp.task('build-image-caremerge', function () {
+//add cmc
+gulp.task('deploy-image', function () {
+    console.log('targetEnv: ' + arg['targetEnv'])
+    console.log('imageId: ' + arg['imageId'])
+});
+
+//add cmc
+gulp.task('build-image-caremerge-cu-docker-compose', function () {
     // fetch command line arguments
     console.log('imageId: ' + arg['imageId'])
 
@@ -514,12 +521,6 @@ gulp.task('build-image-caremerge', function () {
     }
 
     console.log('STOP')
-});
-
-//add cmc
-gulp.task('deploy-image', function () {
-    console.log('targetEnv: ' + arg['targetEnv'])
-    console.log('imageId: ' + arg['imageId'])
 });
 
 /********************
