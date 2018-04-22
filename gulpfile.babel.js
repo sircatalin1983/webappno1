@@ -473,11 +473,11 @@ gulp.task('test:client', done => {
 });
 
 //add cmc
-gulp.task('build-imagex', function() {
+gulp.task('build-image', function() {
   // fetch command line arguments
-  console.log('imageId: '+ arg['imageId'])
-
+  console.log('NU MERGE imageId: '+ arg['imageId'])
   console.log('START')
+  
   var shell = require("shelljs");
   console.log('BUILDING IMAGE');
   if (!arg['imageId']) {
@@ -494,7 +494,7 @@ gulp.task('build-imagex', function() {
   console.log('STOP')
 });
 
-gulp.task('build-image', function() {
+gulp.task('build-image-caremerge', function() {
     // fetch command line arguments
     console.log('imageId: '+ arg['imageId'])
   
@@ -514,7 +514,6 @@ gulp.task('build-image', function() {
   
     console.log('STOP')
   });
-  
 
 //add cmc
 gulp.task('deploy-image', function() {
