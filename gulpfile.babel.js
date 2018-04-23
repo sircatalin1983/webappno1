@@ -526,7 +526,7 @@ gulp.task('deploy-image', function () {
                 shell.exec('docker run --name devops-mongo -p 27017:27017 -d mongo');
             }
             var rc = shell.exec('docker run -t -d --name webappno1-' + arg['targetEnv'] + ' --link devops-mongo:mongo.server -p '
-                + ports[arg['targetEnv']] + ':' + ports[arg['targetEnv']] + ' --env NODE_ENV=' + arg['targetEnv'] + ' todolist:' + arg['imageId']).code;
+                + ports[arg['targetEnv']] + ':' + ports[arg['targetEnv']] + ' --env NODE_ENV=' + arg['targetEnv'] + ' webappno1:' + arg['imageId']).code;
             if (rc > 0) {
                 console.log("DOCKER FAILURE");
             }
