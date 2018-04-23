@@ -507,7 +507,30 @@ gulp.task('deploy-image', function () {
     };
 
     if (arg['imageId'] && arg['targetEnv']) {
-        console.log('ENTER IMAGE');
+        var shell = require("shelljs");
+
+        console.log('STOPPING AND REMOVING EXISTING CONTAINERS');
+        shell.exec('docker stop webappno1-' + arg['targetEnv'] + ' && docker rm webappno1-' + arg['targetEnv']);
+
+        console.log('DEPLOYING ' + arg['targetEnv'] + ' CONTAINER');
+        if (arg['targetEnv'] === 'ci') {
+            var rc = shell.exec('docker run -t -d --name webappno1-' + arg['targetEnv'] + ' -p ' + ports[arg['targetEnv']] + ':' + ports[arg['targetEnv']] + ' --env NODE_ENV=' + arg['targetEnv'] + ' webappno1:' + arg['imageId']);
+            if (rc > 0) {
+                console.log("DOCKER FAILURE")
+            }
+        } else {
+            // ensure mongo is up
+            var isMongo = shell.exec('docker ps | grep devops-mongo').code;
+            if (isMongo > 0) {
+                console.log('DEPLOYING Mongodb CONTAINER FIRST');
+                shell.exec('docker run --name devops-mongo -p 27017:27017 -d mongo');
+            }
+            var rc = shell.exec('docker run -t -d --name webappno1-' + arg['targetEnv'] + ' --link devops-mongo:mongo.server -p '
+                + ports[arg['targetEnv']] + ':' + ports[arg['targetEnv']] + ' --env NODE_ENV=' + arg['targetEnv'] + ' todolist:' + arg['imageId']).code;
+            if (rc > 0) {
+                console.log("DOCKER FAILURE");
+            }
+        }
     } else {
         console.log('Required param not set - use gulp deploy\:\<target\>\:\<tag\>');
         console.log('PROCESS STOPPED WITH ERROR ON DOCKER');
