@@ -489,7 +489,7 @@ gulp.task('build-image', function () {
         }
     } else {
         console.log('must supply an imageId to build');
-        console.log('PROCESS STOPPED WITH ERROR ON DOCKER')
+        console.log('PROCESS STOPPED WITH ERROR ON DOCKER');
     }
 
     console.log('STOP')
@@ -499,6 +499,19 @@ gulp.task('build-image', function () {
 gulp.task('deploy-image', function () {
     console.log('targetEnv: ' + arg['targetEnv'])
     console.log('imageId: ' + arg['imageId'])
+
+    var ports = {
+        prod: '9000',
+        ci: '9001',
+        si: '9002'
+    };
+
+    if (arg['imageId'] && arg['targetEnv']) {
+        console.log('ENTER IMAGE');
+    } else {
+        console.log('Required param not set - use gulp deploy\:\<target\>\:\<tag\>');
+        console.log('PROCESS STOPPED WITH ERROR ON DOCKER');
+    }
 });
 
 //add cmc
