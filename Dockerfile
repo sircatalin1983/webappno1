@@ -20,7 +20,9 @@ WORKDIR /usr/src/app
 
 COPY package.json /usr/src/app/
 RUN npm install --production
-COPY . /usr/src/app
+#COPY . /usr/src/app
+COPY Dockerfile /usr/src/app/
+COPY ./dist /usr/src/app
 
 EXPOSE 9002
 
