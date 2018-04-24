@@ -474,10 +474,9 @@ gulp.task('test:client', done => {
 
 //add cmc
 gulp.task('build-image', function () {
-    console.log('START')
+    console.log('BUILDING IMAGE');
 
     var shell = require("shelljs");
-    console.log('BUILDING IMAGE');
 
     if (arg['imageId']) {
         var rc = shell.exec('docker build -t webappno1:' + arg['imageId'] + ' ./dist').code;
@@ -491,8 +490,6 @@ gulp.task('build-image', function () {
         console.log('must supply an imageId to build');
         console.log('PROCESS STOPPED WITH ERROR ON DOCKER');
     }
-
-    console.log('STOP')
 });
 
 //add cmc
@@ -517,10 +514,10 @@ gulp.task('deploy-image', function () {
             var rc = shell.exec('docker run -t -d --name webappno1-' + arg['targetEnv'] + ' -p ' + ports[arg['targetEnv']] + ':' + ports[arg['targetEnv']] + ' --env NODE_ENV=' + arg['targetEnv'] + ' webappno1:' + arg['imageId']);
             if (rc > 0) {
                 console.log("DOCKER FAILURE")
-            }        
+            }
         }
         
-        if (arg['targetEnv'] === 'si') {
+        if (arg['targetEnv'] === 'si' || arg['targetEnv'] === 'prod') {
             console.log('STEP 2 - Deploying ' + arg['targetEnv'] + ' container');            
             console.log('STEP 3 - Check if MongoDB container is up and runing'); 
             
@@ -531,9 +528,11 @@ gulp.task('deploy-image', function () {
                 shell.exec('docker run --name webappno1db -p27017:27017 -d mongo:3.4.2');
             }
 
-            console.log('STEP 4 - Run the comntent as into a docker container');             
+            console.log('STEP 4 - Run the comntent as into a docker container');     
+            console.log('STEP 4 - PORT: ' + ports[arg['targetEnv']]);          
             var rc = shell.exec('docker run -t -d --name webappno1-' + arg['targetEnv'] + ' --link webappno1db:mongo.server -p '
-                + ports[arg['targetEnv']] + ':' + ports[arg['targetEnv']] + ' --env NODE_ENV=' + arg['targetEnv'] + ' webappno1:' + arg['imageId']).code;            
+                + ports[arg['targetEnv']] + ':' + ports[arg['targetEnv']] 
+                + ' --env NODE_ENV=' + arg['targetEnv'] + ' webappno1:' + arg['imageId']).code;            
             if (rc > 0) {
                 console.log("DOCKER FAILURE");
             }
