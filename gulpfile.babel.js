@@ -529,7 +529,10 @@ gulp.task('deploy-image', function () {
             }
 
             console.log('STEP 4 - Run the comntent as into a docker container');     
-            console.log('STEP 4 - PORT: ' + ports[arg['targetEnv']]);          
+            console.log('docker run -t -d --name webappno1-' + arg['targetEnv'] + ' --link webappno1db:mongo.server -p '
+            + ports[arg['targetEnv']] + ':' + ports[arg['targetEnv']] 
+            + ' --env NODE_ENV=' + arg['targetEnv'] + ' webappno1:' + arg['imageId']);
+                      
             var rc = shell.exec('docker run -t -d --name webappno1-' + arg['targetEnv'] + ' --link webappno1db:mongo.server -p '
                 + ports[arg['targetEnv']] + ':' + ports[arg['targetEnv']] 
                 + ' --env NODE_ENV=' + arg['targetEnv'] + ' webappno1:' + arg['imageId']).code;            
