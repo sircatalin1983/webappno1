@@ -22,6 +22,6 @@ COPY package.json /usr/src/app/
 RUN npm install --production
 COPY . /usr/src/app
 
-EXPOSE 9000
+EXPOSE 9002
 
 CMD [ "npm", "start" ]
