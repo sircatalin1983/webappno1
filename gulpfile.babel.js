@@ -535,7 +535,7 @@ gulp.task('deploy-image', function () {
             + ' --env NODE_ENV=' + arg['targetEnv'] + ' webappno1:' + arg['imageId']);
 
             var rc = shell.exec('docker run -t -d --name webappno1-' + arg['targetEnv'] + ' --link webappno1db:mongo.server -p '
-                + ports[arg['targetEnv']] + ': 8080' 
+                + '9002 : 8080' 
                 + ' --env NODE_ENV=' + arg['targetEnv'] + ' webappno1:' + arg['imageId']).code;            
             if (rc > 0) {
                 console.log("DOCKER FAILURE");
