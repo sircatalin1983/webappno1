@@ -473,7 +473,7 @@ gulp.task('test:client', done => {
 });
 
 //add cmc
-gulp.task('build-image-fara-composer', function () {
+gulp.task('build-image', function () {
     console.log('BUILDING IMAGE');
 
     var shell = require("shelljs");
@@ -494,7 +494,7 @@ gulp.task('build-image-fara-composer', function () {
 });
 
 //add cmc
-gulp.task('deploy-image-fara-composer', function () {
+gulp.task('deploy-image', function () {
     console.log('targetEnv: ' + arg['targetEnv'])
     console.log('imageId: ' + arg['imageId'])
 
@@ -548,7 +548,7 @@ gulp.task('deploy-image-fara-composer', function () {
 });
 
 //add cmc
-gulp.task('build-image', function () {
+gulp.task('build-image-care-merge', function () {
     // fetch command line arguments
     console.log('imageId: ' + arg['imageId'])
 
