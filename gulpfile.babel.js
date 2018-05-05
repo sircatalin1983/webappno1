@@ -555,8 +555,8 @@ gulp.task('build-image', function () {
     var shell = require("shelljs");
 
     if (arg['imageId']) {
-        var rc = shell.exec('docker build -t webappno1:' + arg['imageId'] + ' ./dist').code;
-        console.log('docker build -t webappno1:' + arg['imageId'] + ' ./dist');
+        var rc = shell.exec('docker build -t webappno1:' + arg['imageId'] + ' .').code;
+        console.log('docker build -t webappno1:' + arg['imageId'] + ' .');
         
         if (rc > 0) {
             console.log('DOCKER FAILURE')
