@@ -550,6 +550,26 @@ gulp.task('deploy-image---cu-docker', function () {
 
 //add cmc
 gulp.task('build-image', function () {
+    console.log('BUILDING IMAGE');
+
+    var shell = require("shelljs");
+
+    if (arg['imageId']) {
+        var rc = shell.exec('docker build -t webappno1:' + arg['imageId'] + ' ./dist').code;
+        console.log('docker build -t webappno1:' + arg['imageId'] + ' ./dist');
+        
+        if (rc > 0) {
+            console.log('DOCKER FAILURE')
+        } else {
+            console.log('DOCKER OK');
+        }
+    } else {
+        console.log('must supply an imageId to build');
+        console.log('PROCESS STOPPED WITH ERROR ON DOCKER');
+    }
+});
+
+gulp.task('deploy-image', function () {
     // fetch command line arguments
     console.log('imageId: ' + arg['imageId'])
 
@@ -568,17 +588,6 @@ gulp.task('build-image', function () {
     }
 
     console.log('STOP')
-});
-
-gulp.task('deploy-image', function () {
-    console.log('targetEnv: ' + arg['targetEnv'])
-    console.log('imageId: ' + arg['imageId'])
-
-    var ports = {
-        prod: '9000',
-        ci: '9001',
-        si: '9002'
-    };
 });
 /********************
  * Build
