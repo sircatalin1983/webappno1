@@ -1,5 +1,6 @@
 FROM node:latest 
 
+#care merge cu docker compose
 RUN mkdir -p /var/www
 WORKDIR /var/www
  

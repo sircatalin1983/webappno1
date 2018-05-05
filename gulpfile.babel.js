@@ -473,7 +473,7 @@ gulp.task('test:client', done => {
 });
 
 //add cmc
-gulp.task('build-image', function () {
+gulp.task('build-image---cu-docker', function () {
     console.log('BUILDING IMAGE');
 
     var shell = require("shelljs");
@@ -494,7 +494,7 @@ gulp.task('build-image', function () {
 });
 
 //add cmc
-gulp.task('deploy-image', function () {
+gulp.task('deploy-image---cu-docker', function () {
     console.log('targetEnv: ' + arg['targetEnv'])
     console.log('imageId: ' + arg['imageId'])
 
@@ -503,7 +503,7 @@ gulp.task('deploy-image', function () {
         ci: '9001',
         si: '9002'
     };
-
+/*
     if (arg['imageId'] && arg['targetEnv']) {
         var shell = require("shelljs");
 
@@ -545,10 +545,11 @@ gulp.task('deploy-image', function () {
         console.log('Required param not set - use gulp deploy\:\<target\>\:\<tag\>');
         console.log('PROCESS STOPPED WITH ERROR ON DOCKER');
     }
+    //*/
 });
 
 //add cmc
-gulp.task('build-image-care-merge', function () {
+gulp.task('build-image', function () {
     // fetch command line arguments
     console.log('imageId: ' + arg['imageId'])
 
@@ -569,6 +570,16 @@ gulp.task('build-image-care-merge', function () {
     console.log('STOP')
 });
 
+gulp.task('deploy-image', function () {
+    console.log('targetEnv: ' + arg['targetEnv'])
+    console.log('imageId: ' + arg['imageId'])
+
+    var ports = {
+        prod: '9000',
+        ci: '9001',
+        si: '9002'
+    };
+});
 /********************
  * Build
  ********************/
