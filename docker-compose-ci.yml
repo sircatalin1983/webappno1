@@ -1,10 +1,10 @@
 version: '2'
 services:
   app:
-    image: webappno1
+    image: webappno1-ci
     environment:
       NODE_ENV: production
-      MONGODB_URI: mongodb://mongo/webappno1
+      MONGODB_URI: mongodb://mongo/webappno1-ci
     ports:
       - 9001:8080
   mongo:
