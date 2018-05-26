@@ -32,9 +32,9 @@ module.exports = function(config) {
         type: 'html', //produces a html document after code is run
         subdir: 'client'
       }, {
-        type: 'json',
+        type: 'xml',
         subdir: '.',
-        file: 'client-coverage.json'
+        file: 'client-coverage.xml'
       }],
       dir: 'coverage/' //path to created html doc
     },
@@ -69,7 +69,7 @@ module.exports = function(config) {
     // - junit
     // - growl
     // - coverage
-    reporters: ['progress', 'junit'],
+    reporters: ['spec', 'coverage'],
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: false,
