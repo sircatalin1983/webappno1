@@ -39,12 +39,6 @@ module.exports = function(config) {
       dir: 'coverage/' //path to created html doc
     },
 
-    junitReporter: {
-      outputDir: 'reports/karma',
-      outputFile: 'report.xml',
-      suite: ''
-    },
-
     plugins: [
       require('karma-chrome-launcher'),
       require('karma-coverage'),
