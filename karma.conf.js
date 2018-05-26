@@ -69,7 +69,7 @@ module.exports = function(config) {
     // - junit
     // - growl
     // - coverage
-    reporters: ['spec', 'coverage'],
+    reporters: ['progress', 'junit'],
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: false,
