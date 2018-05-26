@@ -32,7 +32,7 @@ module.exports = function(config) {
         type: 'html', //produces a html document after code is run
         subdir: 'client'
       }, {
-        type: 'xml',
+        type: 'cobertura',
         subdir: '.',
         file: 'client-coverage.xml'
       }],
