@@ -712,6 +712,7 @@ gulp.task('copy:server', () => {
 gulp.task('copy:docker', () => {
     return gulp.src([
         'Dockerfile',
+        'Dockerfile-ci',
         'docker-compose.yml'
     ], { cwdbase: true })
         .pipe(gulp.dest(paths.dist));
