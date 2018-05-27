@@ -44,9 +44,7 @@
 
 /* Component styles are injected through gulp */
 /* inject:css */
-@import 'abc/abc.css';
 @import 'admin/admin.css';
-@import 'georgi/georgi.css';
 @import 'list/list.css';
 @import 'lists/lists.css';
 @import 'main/main.css';

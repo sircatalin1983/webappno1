@@ -16,7 +16,6 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
-  require('../api/georgi/georgi.socket').register(socket);
   require('../api/userlist/userlist.socket').register(socket);
   require('../api/item/item.socket').register(socket);
   require('../api/list/list.socket').register(socket);

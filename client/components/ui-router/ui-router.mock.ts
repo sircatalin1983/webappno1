@@ -1,5 +1,5 @@
 'use strict';
-const angular = require('angular');
+//const angular = require('angular');
 
 angular.module('stateMock', []);
 angular.module('stateMock').service('$state', function($q) {

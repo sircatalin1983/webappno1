@@ -24,7 +24,6 @@ import main from './main/main.component';
 import constants from './app.constants';
 import util from '../components/util/util.module';
 import socket from '../components/socket/socket.service';
-import abc from './abc/abc.component';
 import lists from './lists/lists.component';
 import list from './list/list.component';
 
@@ -50,7 +49,6 @@ angular.module('myappApp', [
   constants,
   socket,
   util,
-  abc,
   lists,
   list
 ])
