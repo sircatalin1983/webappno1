@@ -17,5 +17,7 @@ module.exports = {
         timestamps: false
       }
     }
-  }
+  },
+  // Seed database on startup
+  seedDB: true
 };
