@@ -43,7 +43,7 @@ module.exports = function(config) {
       require('karma-chrome-launcher'),
       require('karma-coverage'),
       require('karma-firefox-launcher'),
-
+      require('karma-junit-reporter'),      //custom add M
       require('karma-jasmine'),
       require('karma-spec-reporter'),
       require('karma-phantomjs-launcher'),
@@ -69,7 +69,7 @@ module.exports = function(config) {
     // - junit
     // - growl
     // - coverage
-    reporters: ['spec', 'coverage'],
+    reporters: ['dots', 'progress', 'spec', 'coverage', 'junit'],
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: false,
@@ -82,7 +82,7 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['PhantomJS'],
+    browsers: ['PhantomJS', 'Chrome'],
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
