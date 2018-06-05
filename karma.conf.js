@@ -70,6 +70,11 @@ module.exports = function(config) {
     // - growl
     // - coverage
     reporters: ['dots', 'progress', 'spec', 'coverage', 'junit'],
+    
+    junitReporter: {
+      outputDir: 'coverage',
+      outputFile: 'karma-results.xml'
+    },
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: false,
