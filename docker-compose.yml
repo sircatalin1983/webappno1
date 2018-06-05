@@ -6,7 +6,7 @@ services:
       NODE_ENV: production
       MONGODB_URI: mongodb://mongo/webappno1
     ports:
-      - 9000:8080
+      - 10000:8080
   mongo:
     image: mongo:3.4.2
     volumes:
