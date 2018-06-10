@@ -199,6 +199,26 @@ gulp.task('env:prod', () => {
     });
 });
 
+//start add moldovan
+gulp.task('env:ci', () => {
+    plugins.env({
+        vars: { NODE_ENV: 'ci' }
+    });
+});
+
+gulp.task('env:si', () => {
+    plugins.env({
+        vars: { NODE_ENV: 'si' }
+    });
+});
+
+gulp.task('env:prod', () => {
+    plugins.env({
+        vars: { NODE_ENV: 'prod' }
+    });
+});
+//end add moldovan
+
 /********************
  * Tasks
  ********************/
@@ -338,6 +358,39 @@ gulp.task('start:server:debug', () => {
         .on('log', onServerLog);
 });
 
+//start add moldovan
+gulp.task('start:server:ci', () => {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'ci';
+    config = require(`./${paths.dist}/${serverPath}/config/environment`);
+    nodemon(`-w ${paths.dist}/${serverPath} ${paths.dist}/${serverPath}`)
+        .on('log', onServerLog);
+});
+
+gulp.task('start:server:si', () => {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'si';
+    config = require(`./${paths.dist}/${serverPath}/config/environment`);
+    nodemon(`-w ${paths.dist}/${serverPath} ${paths.dist}/${serverPath}`)
+        .on('log', onServerLog);
+});
+
+gulp.task('start:client:ci', cb => {
+    whenServerReady(() => {
+        console.log('log port: ' +  + config.browserSyncPort);
+        open('http://localhost:' + config.browserSyncPort);
+        cb();
+    });
+});
+
+gulp.task('start:client:si', cb => {
+    whenServerReady(() => {
+        console.log('log port: ' +  + config.browserSyncPort);
+        open('http://localhost:' + config.browserSyncPort);
+        cb();
+    });
+});
+
+//end add moldovan
+
 gulp.task('watch', () => {
     var testFiles = _.union(paths.client.test, paths.server.test.unit, paths.server.test.integration);
 
@@ -392,6 +445,43 @@ gulp.task('serve:dist', cb => {
         ['start:server:prod', 'start:client'],
         cb);
 });
+
+//start add moldovan
+gulp.task('serve:ci', cb => {
+    runSequence(
+        [
+            'clean:tmp',
+            'lint:scripts',
+            'inject',
+            'copy:fonts:dev',
+            'env:ci',
+            'typings'
+        ],
+        // 'webpack:dev',
+        ['start:server:ci', 'start:client:ci'],
+        'watch',
+        cb
+    );
+});
+
+gulp.task('serve:si', cb => {
+    runSequence(
+        [
+            'clean:tmp',
+            'lint:scripts',
+            'inject',
+            'copy:fonts:dev',
+            'env:si',
+            'typings'
+        ],
+        // 'webpack:dev',
+        ['start:server:si', 'start:client:si'],
+        'watch',
+        cb
+    );
+});
+
+//end add moldovan
 
 gulp.task('test', cb => {
     return runSequence('test:server', 'test:client', cb);
@@ -713,7 +803,8 @@ gulp.task('copy:docker', () => {
     return gulp.src([
         'Dockerfile',
         'Dockerfile-ci',
-        'docker-compose.yml'
+        'docker-compose.yml',
+        'docker-compose-ci.yml'
     ], { cwdbase: true })
         .pipe(gulp.dest(paths.dist));
 });

@@ -1,7 +1,11 @@
 version: '2'
 services:
-  app:
-    image: webappno1-ci
+  app:    
+    image: webappno1-ci        
+    container_name: webappno1-ci
+    build:
+      context: .
+      dockerfile: Dockerfile-ci
     environment:
       NODE_ENV: production
       MONGODB_URI: mongodb://mongo/webappno1-ci
