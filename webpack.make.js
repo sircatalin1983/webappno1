@@ -20,7 +20,7 @@ module.exports = function makeWebpackConfig(options) {
     var TEST = !!options.TEST;
     var E2E = !!options.E2E;
     var DEV = !!options.DEV;
-
+    var INT = !!options.INT;
     /**
      * Config
      * Reference: http://webpack.github.io/docs/configuration.html
@@ -105,7 +105,7 @@ module.exports = function makeWebpackConfig(options) {
      */
     if(TEST) {
         config.devtool = 'inline-source-map';
-    } else if(BUILD || DEV) {
+    } else if(BUILD || DEV || INT) {
         config.devtool = 'source-map';
     } else {
         config.devtool = 'eval';

@@ -10,7 +10,8 @@ var config = {
 
   // A base URL for your application under test. Calls to protractor.get()
   // with relative paths will be prepended with this.
-  baseUrl: 'http://localhost:' + (process.env.PORT || '9000'),
+  //baseUrl: 'http://localhost:' + (process.env.PORT || '9000'),
+  baseUrl: 'http://localhost:' + (process.env.PORT || '9001'),
 
   // Credientials for Saucelabs
   sauceUser: process.env.SAUCE_USERNAME,

@@ -1,0 +1,16 @@
+FROM node:latest 
+
+#care merge cu docker compose
+RUN mkdir -p /var/www
+WORKDIR /var/www
+ 
+ENV NODE_PATH=/usr/local/lib/node_modules/:/usr/local/lib NODE_ENV=production 
+
+COPY dist /var/www
+RUN npm install
+RUN npm install --save uws
+ 
+
+ 
+EXPOSE 8080
+CMD [ "npm", "start" ]
